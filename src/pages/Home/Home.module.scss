@@ -1,0 +1,17 @@
+.hero,
+.projects,
+.marquee,
+.about,
+.beyond {
+    width: 100%;
+    height: 100vh;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        font-size: 3rem;
+        color: #333;
+    }
+}

@@ -1,0 +1,33 @@
+.footer {
+  width: 100%;
+  padding: 24px 108px;
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    a {
+      &:hover {
+        color: red;
+      }
+    }
+  }
+
+  .socialsMenu {
+    display: flex;
+    flex-direction: row;
+    column-gap: 24px;
+
+    .links {
+        padding: 12px;
+      &:hover {
+        color: red;
+      }
+    }
+  }
+
+  small {
+    width: 100%;
+    text-align: center;
+  }
+}
