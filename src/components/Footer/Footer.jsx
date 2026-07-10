@@ -1,39 +1,41 @@
 import s from "./Footer.module.scss";
 
+// Images
+import linkedinIcon from "../../assets/linkedin_icon.svg";
+import githubIcon from "../../assets/github_icon.svg";
+import gmailIcon from "../../assets/gmail_icon.svg";
+
 const Footer = () => {
   return (
     <footer className={s.footer}>
       <section></section>
 
       <nav className={s.nav}>
-        <a href="#hero" className={s.links}>
+        <a href="#hero" className={`${s.links} ${s.logo}`}>
           JEF.
         </a>
 
         <ul className={s.socialsMenu}>
           <li className={s.items}>
             <a href="#linkedin" className={s.links}>
-              {/* <img src="" alt="" /> */}
-              text
+              <img src={linkedinIcon} alt="LinkedIn" />
             </a>
           </li>
           <li className={s.items}>
             <a href="#github" className={s.links}>
-              {/* <img src="" alt="" /> */}
-              text
+              <img src={githubIcon} alt="GitHub" />
             </a>
           </li>
           <li className={s.items}>
             <a href="#gmail" className={s.links}>
-              {/* <img src="" alt="" /> */}
-              text
+              <img src={gmailIcon} alt="Gmail" />
             </a>
           </li>
         </ul>
       </nav>
 
       <small className={s.copyright}>
-        <p>© 2026 JEFF. All rights reserved.</p>
+        <p>© JEF. 2026</p>
       </small>
     </footer>
   );

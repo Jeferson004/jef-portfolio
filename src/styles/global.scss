@@ -7,6 +7,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  color: $text-clr;
 }
 
 html {
@@ -26,4 +27,11 @@ ul {
 a {
   text-decoration: none;
   display:block;
+  white-space: nowrap;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }

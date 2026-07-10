@@ -1,5 +1,7 @@
 import s from "./Home.module.scss";
 
+// components
+
 const Home = () => {
   return (
     <>
@@ -13,17 +15,17 @@ const Home = () => {
         <h1>Projects</h1>
       </section>
 
-       {/* Marquee Section */}
+      {/* Marquee Section */}
       <section className={s.marquee}>
         <h1>Marquee</h1>
       </section>
 
-       {/* About me Section */}
+      {/* About me Section */}
       <section className={s.about} id="about">
         <h1>About me</h1>
       </section>
 
-       {/* Beyond the code Section */}
+      {/* Beyond the code Section */}
       <section className={s.beyond} id="beyond">
         <h1>Beyond the code</h1>
       </section>
