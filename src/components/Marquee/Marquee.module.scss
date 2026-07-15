@@ -1,0 +1,43 @@
+.marquee {
+  width: 120vw;
+  margin-left: -10vw;
+  overflow: hidden;
+  white-space: nowrap;
+  background: #000;
+  padding: 24px 0;
+  box-sizing: border-box;
+  transform: rotate(-3.8deg);
+  transform-origin: center;
+
+  .marqueeContainer {
+    display: flex;
+    width: max-content;
+    max-width: 100%;
+    animation: marquee 100s linear infinite;
+
+    .marqueeItems {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #fff;
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 100%;
+
+      img {
+        width: 40px;
+        height: auto;
+      }
+    }
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-5396px);
+  }
+}

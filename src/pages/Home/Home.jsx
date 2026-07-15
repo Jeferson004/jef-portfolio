@@ -1,6 +1,7 @@
 import s from "./Home.module.scss";
 
 // components
+import Marquee from "../../components/Marquee/Marquee.jsx";
 
 // Images
 import linkedinIcon from "../../assets/linkedin_icon.svg";
@@ -11,17 +12,16 @@ import Jvin from "../../assets/jvin_site.png";
 import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squid.png";
 
-
 const Home = () => {
   return (
     <>
       {/* Hero Section */}
       <section className={s.hero} id="hero">
         <div className={s.header_and_parag}>
-          <h1 className={s.h_2xl}>
+          <h1>
             Curious enough to learn. Driven enough to build.
           </h1>
-          <h6 className={s.h_xs}>
+          <h6>
             Front-end developer fueled by coffee and a stubborn desire to make
             things actually work.
           </h6>
@@ -104,48 +104,66 @@ const Home = () => {
       {/* Projects Section */}
       <section className={s.projects} id="projects">
         <div className={s.outer_row}>
-          <div className={s.indicator}></div>
+          <div className={s.indicator}>dot dot dot</div>
 
           <div className={s.inner_row}>
             <a href="#" className={s.cols}>
               <img src={Jvin} alt="Jvin site" />
-              <div className={s.chips}>Client Project</div>
-              <h6>Product Designer Portfolio</h6>
-              <p>
-                Part-time freelance front-end development for a live client
-                portfolio site
-              </p>
+              <div className={s.chip_and_texts}>
+                <div className={s.chips}>Client Project</div>
+                <h6>Product Designer Portfolio</h6>
+                <p>
+                  Part-time freelance front-end development for a live client
+                  portfolio site
+                </p>
+              </div>
             </a>
             <a href="#" className={s.cols}>
               <img src={Banwa} alt="Banwa site" />
+               <div className={s.chip_and_texts}>
               <div className={s.chips}>Backend Development</div>
               <h6>BANWA: Backend & API Architecture</h6>
               <p>
                 API development, hosting, and access control for a local
                 government service platform
               </p>
+               </div>
             </a>
             <a href="#" className={s.cols}>
               <img src={SquidPay} alt="SquidPay site" />
+               <div className={s.chip_and_texts}>
               <div className={s.chips}>Personal Project</div>
               <h6>Fintech Landing Page (Concept Build)</h6>
               <p>
                 Self-initiated front-end project replicating a payments platform
                 landing page
               </p>
+               </div>
             </a>
           </div>
         </div>
       </section>
 
       {/* Marquee Section */}
-      <section className={s.marquee}>
-        <h1>Marquee</h1>
-      </section>
+      <Marquee />
 
       {/* About me Section */}
       <section className={s.about} id="about">
-        <h1>About me</h1>
+        <div className={s.header_and_parag}>
+          <h1>About</h1>
+          <h6>
+            The first time I saw code, I was hooked by curiosity. How did a
+            button change color on click? How did a page transition to another
+            with just a few lines? I had to know, so I started recreating those
+            little interactions myself.
+            <br />
+            <br />
+            The moment my first line of code actually worked, something clicked.
+            That small win turned into a genuine passion, and it's been the same
+            ever since: building, breaking things, learning, and getting a
+            little better with every project.
+          </h6>
+        </div>
       </section>
 
       {/* Beyond the code Section */}
