@@ -20,9 +20,9 @@
       align-items: center;
       gap: 0.5rem;
       color: #fff;
-      font-size: 32px;
+      font-size: clamp(1.125rem, 0.846rem + 1.14vw, 1.875rem);
       font-weight: 900;
-      line-height: 100%;
+      line-height: clamp(1.75rem, 1.518rem + 0.95vw, 2.375rem);
 
       img {
         width: 40px;

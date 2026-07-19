@@ -1,3 +1,5 @@
+@use "../../styles/global.scss" as *;
+
 .hero {
   margin-top: 96px;
 }
@@ -10,12 +12,6 @@
   max-width: 1440px;
   margin-inline: auto;
   width: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-
   padding: 165px 16px 105px 16px;
 }
 
@@ -27,17 +23,17 @@
     margin-inline: auto;
 
     h1 {
-      font-size: 30px;
+      font-size: clamp(1.875rem, 0.9rem + 4vw, 4.5rem);
       font-weight: 900;
-      line-height: 38px;
+      line-height: clamp(2.375rem, 1.168rem + 4.95vw, 5.625rem);
       letter-spacing: 0%;
       margin-bottom: 32px;
     }
 
     h6 {
-      font-size: 16px;
+      font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
       font-weight: 400;
-      line-height: 24px;
+      line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
 
       max-width: 600px;
       width: 100%;
@@ -90,7 +86,7 @@
   row-gap: 24px;
   align-items: flex-start;
   width: 100%;
-  margin: -56px 0 24px 204.64px;
+  margin: -56px 0 24px 108px;
 
   .links {
     padding: 12px;
@@ -126,10 +122,7 @@
     display: flex;
     flex-direction: column;
     gap: 58px;
-
     padding-left: 16px;
-    max-width: 1224px;
-
     border-left: 1px solid black;
 
     .cols {
@@ -184,23 +177,23 @@
             border-radius: 1000px;
             border: 1px solid black;
             width: max-content;
-            font-size: 16px;
+            font-size: clamp(1rem, 0.907rem + 0.38vw, 1.25rem);
             font-weight: 400;
-            line-height: 24px;
+            line-height: clamp(1.5rem, 1.361rem + 0.57vw, 1.875rem);
             margin-bottom: 12px;
           }
 
           h6 {
-            font-size: 24px;
+            font-size: clamp(1.5rem, 0.943rem + 2.29vw, 3rem);
             font-weight: 900;
-            line-height: 32px;
+            line-height: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);
             margin-bottom: 12px;
           }
 
           p {
-            font-size: 16px;
+            font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
             font-weight: 400;
-            line-height: 24px;
+            line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
           }
         }
       }
@@ -219,17 +212,84 @@
     margin-inline: auto;
 
     h1 {
-      font-size: 30px;
+      font-size: clamp(1.5rem, 0.386rem + 4.57vw, 4.5rem);
       font-weight: 900;
-      line-height: 38px;
+      line-height: clamp(2rem, 0.654rem + 5.52vw, 5.625rem);
       letter-spacing: 0%;
       margin-bottom: 16px;
     }
 
     h6 {
-      font-size: 16px;
+      font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
       font-weight: 400;
-      line-height: 24px;
+      line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
+    }
+  }
+}
+
+.beyond {
+  .grouped_cards {
+    column-count: 2;
+    column-gap: 16px;
+  }
+
+  .card {
+    border-radius: 32px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    break-inside: avoid;
+    margin-bottom: 16px;
+
+    &.card1 {
+      aspect-ratio: 175 / 237;
+      background-image: url("../../assets/pic_1.png");
+    }
+
+    &.card2 {
+      aspect-ratio: 175 / 346.761;
+      background-image: url("../../assets/pic_2.png");
+    }
+
+    &.card3 {
+      order: 1;
+      aspect-ratio: 332 / 306;
+      background-image: url("../../assets/pic_3.png");
+    }
+
+    &.card4 {
+      aspect-ratio: 384 / 488;
+      background-image: url("../../assets/pic_4.png");
+    }
+
+    &.card5 {
+      aspect-ratio: 261 / 331;
+      background-image: url("../../assets/pic_5.png");
+    }
+
+    &.card6 {
+      aspect-ratio: 1 / 1;
+      background-image: url("../../assets/pic_6.png");
+    }
+  }
+
+  .textCard {
+    text-align: center;
+    margin-bottom: 24px;
+
+    h1 {
+      font-size: clamp(1.875rem, 0.9rem + 4vw, 4.5rem);
+      font-weight: 900;
+      line-height: clamp(2.375rem, 1.168rem + 4.95vw, 5.625rem);
+      letter-spacing: 0%;
+      margin-bottom: 16px;
+      white-space: nowrap;
+    }
+
+    p {
+      font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
+      line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
     }
   }
 }
@@ -254,16 +314,6 @@
     .header_and_parag {
       flex-direction: row;
       column-gap: 174px;
-
-      h1 {
-        font-size: 72px;
-        line-height: 90px;
-      }
-
-      h6 {
-        font-size: 24px;
-        line-height: 32px;
-      }
     }
   }
 
@@ -287,6 +337,7 @@
           flex-direction: row-reverse;
           align-items: center;
           justify-content: space-between;
+          column-gap: 24px;
 
           img {
             margin: 0;
@@ -313,18 +364,166 @@
             }
 
             p {
-              font-size: 16px;
+              font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
               font-weight: 400;
-              line-height: 24px;
+              line-height: clamp(2rem, 1.861rem + 0.57vw, 2.375rem);
             }
           }
         }
       }
     }
   }
+
+  .beyond {
+    position: relative;
+    margin-top: 80px;
+    padding-bottom: 105px;
+    margin-inline: auto;
+
+    .grouped_cards {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1440 / 1157;
+      margin-inline: auto;
+    }
+
+    .card {
+      position: absolute;
+      border-radius: 32px;
+      background: linear-gradient(180deg, #f8f8f8 0%, #e5e5e5 100%);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      z-index: 0;
+
+      &.card1 {
+        top: 38.89%;
+        left: 78.06%;
+        width: 21.04%;
+        aspect-ratio: 303 / 380;
+        background-image: url("../../assets/pic_1.png");
+      }
+
+      &.card2 {
+        top: 61.8%;
+        left: 45.28%;
+        width: 20%;
+        aspect-ratio: 288 / 360;
+        background-image: url("../../assets/pic_2.png");
+      }
+
+      &.card3 {
+        top: 12.45%;
+        left: 1.81%;
+        width: 23.06%;
+        aspect-ratio: 332 / 306;
+        background-image: url("../../assets/pic_3.png");
+      }
+
+      &.card4 {
+        top: 57.82%;
+        left: 2.5%;
+        width: 26.67%;
+        aspect-ratio: 384 / 488;
+        background-image: url("../../assets/pic_4.png");
+      }
+
+      &.card5 {
+        top: 0%;
+        left: 36.39%;
+        width: 18.13%;
+        aspect-ratio: 261 / 331;
+        background-image: url("../../assets/pic_5.png");
+      }
+
+      &.card6 {
+        top: 7.61%;
+        left: 68.06%;
+        width: 20%;
+        aspect-ratio: 1 / 1;
+        background-image: url("../../assets/pic_6.png");
+      }
+    }
+
+    .textCard {
+      position: absolute;
+      top: 49.89%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      width: 56.11%;
+      z-index: 6;
+    }
+  }
 }
 
 @media screen and (min-width: 992px) {
+  .circle_container {
+    position: relative;
+    width: 100%;
+    top: -95.9549px;
+
+    .circle_1,
+    .circle_2 {
+      position: absolute;
+      border: 1px solid black;
+      border-radius: 50%;
+      overflow: visible;
+
+      .orbit {
+        position: absolute;
+        inset: 0;
+        animation: orbit 8s linear infinite;
+      }
+
+      .dot {
+        position: absolute;
+        top: 50%;
+        right: -7.5px;
+        transform: translateY(-50%);
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: black;
+      }
+    }
+
+    .circle_1 {
+      width: 290px;
+      height: 290px;
+      top: 175px;
+      left: -145px;
+
+      .orbit {
+        animation-duration: 6s;
+      }
+    }
+
+    .circle_2 {
+      width: 457px;
+      height: 457px;
+      top: 212px;
+      right: -228px;
+
+      .orbit {
+        animation-duration: 10s;
+        animation-direction: reverse;
+      }
+    }
+  }
+
+  @keyframes orbit {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   .socialsMenu {
     display: flex;
   }
@@ -339,13 +538,24 @@
       padding-top: 16px;
     }
   }
+
+  .beyond {
+    padding-bottom: 60px;
+
+    .textCard {
+      h1 {
+        letter-spacing: -2%;
+        margin-bottom: 24px;
+      }
+    }
+  }
 }
 
 @media screen and (min-width: 1124px) {
   .outline_text_and_profile {
     display: flex;
     align-items: center;
-    transform: translateX(-7.7%);
+    transform: translateX(-8.7%);
     justify-content: space-between;
     gap: 66.64px;
 

@@ -15,12 +15,24 @@ import SquidPay from "../../assets/squid.png";
 const Home = () => {
   return (
     <>
+      <div className={s.circle_container}>
+        <div className={s.circle_1}>
+          <div className={s.orbit}>
+            <div className={s.dot}></div>
+          </div>
+        </div>
+
+        <div className={s.circle_2}>
+          <div className={s.orbit}>
+            <div className={s.dot}></div>
+          </div>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className={s.hero} id="hero">
         <div className={s.header_and_parag}>
-          <h1>
-            Curious enough to learn. Driven enough to build.
-          </h1>
+          <h1>Curious enough to learn. Driven enough to build.</h1>
           <h6>
             Front-end developer fueled by coffee and a stubborn desire to make
             things actually work.
@@ -120,25 +132,25 @@ const Home = () => {
             </a>
             <a href="#" className={s.cols}>
               <img src={Banwa} alt="Banwa site" />
-               <div className={s.chip_and_texts}>
-              <div className={s.chips}>Backend Development</div>
-              <h6>BANWA: Backend & API Architecture</h6>
-              <p>
-                API development, hosting, and access control for a local
-                government service platform
-              </p>
-               </div>
+              <div className={s.chip_and_texts}>
+                <div className={s.chips}>Backend Development</div>
+                <h6>BANWA: Backend & API Architecture</h6>
+                <p>
+                  API development, hosting, and access control for a local
+                  government service platform
+                </p>
+              </div>
             </a>
             <a href="#" className={s.cols}>
               <img src={SquidPay} alt="SquidPay site" />
-               <div className={s.chip_and_texts}>
-              <div className={s.chips}>Personal Project</div>
-              <h6>Fintech Landing Page (Concept Build)</h6>
-              <p>
-                Self-initiated front-end project replicating a payments platform
-                landing page
-              </p>
-               </div>
+              <div className={s.chip_and_texts}>
+                <div className={s.chips}>Personal Project</div>
+                <h6>Fintech Landing Page (Concept Build)</h6>
+                <p>
+                  Self-initiated front-end project replicating a payments
+                  platform landing page
+                </p>
+              </div>
             </a>
           </div>
         </div>
@@ -168,7 +180,21 @@ const Home = () => {
 
       {/* Beyond the code Section */}
       <section className={s.beyond} id="beyond">
-        <h1>Beyond the code</h1>
+        <div className={s.textCard}>
+          <h1>Beyond the code</h1>
+          <p>
+            Photography is where I slow down and look at things differently.
+          </p>
+        </div>
+
+        <div className={s.grouped_cards}>
+          <div className={`${s.card} ${s.card3}`} aria-hidden="true" />
+          <div className={`${s.card} ${s.card6}`} aria-hidden="true" />
+          <div className={`${s.card} ${s.card2}`} aria-hidden="true" />
+          <div className={`${s.card} ${s.card5}`} aria-hidden="true" />
+          <div className={`${s.card} ${s.card4}`} aria-hidden="true" />
+          <div className={`${s.card} ${s.card1}`} aria-hidden="true" />
+        </div>
       </section>
     </>
   );
