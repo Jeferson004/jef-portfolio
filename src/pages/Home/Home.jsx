@@ -1,7 +1,9 @@
+// Styles
 import s from "./Home.module.scss";
 
-// components
+// Components
 import Marquee from "../../components/Marquee/Marquee.jsx";
+import ScrollIndicator from "../../components/ScrollIndicator/ScrollIndicator.jsx";
 
 // Images
 import linkedinIcon from "../../assets/linkedin_icon.svg";
@@ -12,102 +14,137 @@ import Jvin from "../../assets/jvin_site.png";
 import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squid.png";
 
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const Home = () => {
+  const aboutRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const speeds = [-100, -180, -250, -80, -140, -200];
+
+      gsap.utils.toArray(`.${s.card}`).forEach((card, i) => {
+        gsap.to(card, {
+          y: speeds[i] ?? -100,
+          ease: "none",
+          scrollTrigger: {
+            trigger: aboutRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
+      });
+    }, aboutRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
       <div className={s.circle_container}>
-        <div className={s.circle_1}>
-          <div className={s.orbit}>
-            <div className={s.dot}></div>
+        <div className={s.background}>
+          <div className={s.circle_1}>
+            <div className={s.orbit}>
+              <div className={s.dot}></div>
+            </div>
           </div>
-        </div>
 
-        <div className={s.circle_2}>
-          <div className={s.orbit}>
-            <div className={s.dot}></div>
+          <div className={s.circle_2}>
+            <div className={s.orbit}>
+              <div className={s.dot}></div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Hero Section */}
       <section className={s.hero} id="hero">
-        <div className={s.header_and_parag}>
-          <h1>Curious enough to learn. Driven enough to build.</h1>
-          <h6>
-            Front-end developer fueled by coffee and a stubborn desire to make
-            things actually work.
-          </h6>
-        </div>
+        <div className={s.container}>
+          <div className={s.header_and_parag}>
+            <h1>Curious enough to learn. Driven enough to build.</h1>
+            <h6>
+              Front-end developer fueled by coffee and a stubborn desire to make
+              things actually work.
+            </h6>
+          </div>
 
-        <div className={s.scroll_icon}>
-          <div className={s.scroll_icon_line}></div>
-        </div>
+          <div className={s.scroll_icon}>
+            <div className={s.scroll_icon_line}></div>
+          </div>
 
-        <div className={s.socialsMenu}>
-          <a href="#linkedin" className={s.links}>
-            <img src={linkedinIcon} alt="LinkedIn" />
-          </a>
-          <a href="#github" className={s.links}>
-            <img src={githubIcon} alt="GitHub" />
-          </a>
-          <a href="#gmail" className={s.links}>
-            <img src={gmailIcon} alt="Gmail" />
-          </a>
-        </div>
+          <div className={s.socials_menu}>
+            <a href="#linkedin" className={s.links}>
+              <img src={linkedinIcon} alt="LinkedIn" />
+            </a>
+            <a href="#github" className={s.links}>
+              <img src={githubIcon} alt="GitHub" />
+            </a>
+            <a href="#gmail" className={s.links}>
+              <img src={gmailIcon} alt="Gmail" />
+            </a>
+          </div>
 
-        <div className={s.outline_text_and_profile}>
-          <h1 className={s.outline_text}>LET'S BUILD</h1>
-          <div className={s.circle_wrapper}>
-            <div className={s.circle_text}>
-              <svg viewBox="0 0 200 200">
-                <defs>
-                  <path
-                    id="circlePath"
-                    d="
+          <div className={s.outline_text_and_profile}>
+            <h1 className={s.outline_text}>LET'S BUILD</h1>
+            <div className={s.circle_wrapper}>
+              <div className={s.circle_text}>
+                <svg viewBox="0 0 200 200">
+                  <defs>
+                    <path
+                      id="circlePath"
+                      d="
                     M 100,100
                     m -80.68,0
                     a 80.68,80.68 0 1,1 161.36,0
                     a 80.68,80.68 0 1,1 -161.36,0
                   "
-                  />
-                </defs>
+                    />
+                  </defs>
 
-                <text>
-                  <textPath href="#circlePath" startOffset="50%">
-                    FRONTEND DEVELOPER • SHOOT ME A MESSAGE •
-                  </textPath>
-                </text>
-              </svg>
+                  <text>
+                    <textPath href="#circlePath" startOffset="50%">
+                      FRONTEND DEVELOPER • SHOOT ME A MESSAGE •
+                    </textPath>
+                  </text>
+                </svg>
+              </div>
+
+              <img className={s.circle_avatar} src={Avatar} alt="" />
             </div>
-
-            <img className={s.circle_avatar} src={Avatar} alt="" />
           </div>
-        </div>
 
-        <div className={s.processes}>
-          <div className={s.row}>
-            <div className={s.cols}>
-              <p>01 Understand</p>
-              <p>
-                I start by figuring out what the project's actually trying to
-                solve.
-              </p>
-            </div>
-            <div className={s.cols}>
-              <p>02 Design to code</p>
-              <p>
-                Then I translate the visuals into responsive, working front-end.
-              </p>
-            </div>
-            <div className={s.cols}>
-              <p>03 Build & test</p>
-              <p>I write the code, then break it,so I can fix it properly.</p>
-            </div>
-            <div className={s.cols}>
-              <p>04 Ship</p>
-              <p>
-                Once it's solid, it goes live, and I keep an eye on it early on.
-              </p>
+          <div className={s.processes}>
+            <div className={s.row}>
+              <div className={s.cols}>
+                <p>01 Understand</p>
+                <p>
+                  I start by figuring out what the project's actually trying to
+                  solve.
+                </p>
+              </div>
+              <div className={s.cols}>
+                <p>02 Design to code</p>
+                <p>
+                  Then I translate the visuals into responsive, working
+                  front-end.
+                </p>
+              </div>
+              <div className={s.cols}>
+                <p>03 Build & test</p>
+                <p>I write the code, then break it,so I can fix it properly.</p>
+              </div>
+              <div className={s.cols}>
+                <p>04 Ship</p>
+                <p>
+                  Once it's solid, it goes live, and I keep an eye on it early
+                  on.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -116,10 +153,9 @@ const Home = () => {
       {/* Projects Section */}
       <section className={s.projects} id="projects">
         <div className={s.outer_row}>
-          <div className={s.indicator}>dot dot dot</div>
-
+          <ScrollIndicator targetSelector={`.${s.project_card}`} count={3} />
           <div className={s.inner_row}>
-            <a href="#" className={s.cols}>
+            <a href="#" className={`${s.cols} ${s.project_card}`}>
               <img src={Jvin} alt="Jvin site" />
               <div className={s.chip_and_texts}>
                 <div className={s.chips}>Client Project</div>
@@ -130,7 +166,7 @@ const Home = () => {
                 </p>
               </div>
             </a>
-            <a href="#" className={s.cols}>
+            <a href="#" className={`${s.cols} ${s.project_card}`}>
               <img src={Banwa} alt="Banwa site" />
               <div className={s.chip_and_texts}>
                 <div className={s.chips}>Backend Development</div>
@@ -141,7 +177,7 @@ const Home = () => {
                 </p>
               </div>
             </a>
-            <a href="#" className={s.cols}>
+            <a href="#" className={`${s.cols} ${s.project_card}`}>
               <img src={SquidPay} alt="SquidPay site" />
               <div className={s.chip_and_texts}>
                 <div className={s.chips}>Personal Project</div>
@@ -179,7 +215,7 @@ const Home = () => {
       </section>
 
       {/* Beyond the code Section */}
-      <section className={s.beyond} id="beyond">
+      <section className={s.beyond} ref={aboutRef} id="beyond">
         <div className={s.textCard}>
           <h1>Beyond the code</h1>
           <p>

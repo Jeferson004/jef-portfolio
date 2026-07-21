@@ -6,7 +6,7 @@ import Humburger from "../../assets/humburger.svg";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [lastScroll, setLastScroll] = useState(0);
+  // const [lastScroll, setLastScroll] = useState(0);
   const [isTop, setIsTop] = useState(true);
 
   const toggleMenu = () => {
@@ -23,13 +23,7 @@ const Header = () => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-      if (currentScroll > 0) {
-        setIsTop(false);
-      } else {
-        setIsTop(true);
-      }
-
-      setLastScroll(currentScroll);
+      setIsTop(currentScroll === 0);
     };
 
     window.addEventListener("scroll", handleScroll, {
@@ -39,7 +33,7 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [lastScroll]);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {

@@ -43,11 +43,11 @@
     margin-left: auto;
     
     li {
-      a {
+      a:not(.activeStatus) {
         padding: 16px 24px;
         font-size: 16px;
         font-weight: 500;
-        line-height: 100%;
+        line-height: 24px;
         white-space: nowrap;
       }
     }
@@ -131,6 +131,7 @@
 
   .nav {
     border-radius: 20px;
+    // padding: 0;
   }
 
   .menu_container {

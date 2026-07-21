@@ -12,15 +12,19 @@ const skills =
 
 function Marquee() {
   return (
-    <div className={s.marquee}>
-      <div className={s.marqueeContainer}>
-        {Array.from({ length: 10 }).map((_, index) => (
-          <h5 key={index} className={s.marqueeItems}>
-            {skills}
-          </h5>
-        ))}
+    <section className={s.marquee}>
+      <div className={s.container}>
+        <div className={s.content}>
+          <div className={s.row}>
+            {Array.from({ length: 10 }).map((_, index) => (
+              <h5 key={index} className={s.marquee_items}>
+                {skills}
+              </h5>
+            ))}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
 
