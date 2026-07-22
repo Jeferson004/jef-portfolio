@@ -14,22 +14,47 @@ import Jvin from "../../assets/jvin_site.png";
 import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squid.png";
 
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
+  const projects = [
+    {
+      img: Jvin,
+      alt: "Jvin site",
+      chip: "Client Project",
+      title: "Product Designer Portfolio",
+      desc: "Part-time freelance front-end development for a live client portfolio site",
+    },
+    {
+      img: Banwa,
+      alt: "Banwa site",
+      chip: "Backend Development",
+      title: "BANWA: Backend & API Architecture",
+      desc: "API development, hosting, and access control for a local government service platform",
+    },
+    {
+      img: SquidPay,
+      alt: "SquidPay site",
+      chip: "Personal Project",
+      title: "Fintech Landing Page (Concept Build)",
+      desc: "Self-initiated front-end project replicating a payments platform landing page",
+    },
+  ];
   const aboutRef = useRef(null);
+  const titleRef = useRef(null);
+  const projectsRef = useRef(null);
+  const [activeProject, setActiveProject] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const speeds = [-100, -180, -250, -80, -140, -200];
-
+      const speeds = [-24, -24, -24, -24, -24, -24];
       gsap.utils.toArray(`.${s.card}`).forEach((card, i) => {
         gsap.to(card, {
-          y: speeds[i] ?? -100,
+          y: speeds[i],
           ease: "none",
           scrollTrigger: {
             trigger: aboutRef.current,
@@ -39,7 +64,49 @@ const Home = () => {
           },
         });
       });
+      gsap.from(titleRef.current, {
+        y: 80,
+        opacity: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%",
+          end: "top 50%",
+          scrub: true,
+        },
+      });
     }, aboutRef);
+    return () => ctx.revert();
+  }, []);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const scenes = gsap.utils.toArray(`.${s.project_scene}`);
+      const cards = gsap.utils.toArray(`.${s.project_card}`);
+
+      scenes.forEach((scene, i) => {
+        // drives the scroll indicator directly, no IntersectionObserver
+        ScrollTrigger.create({
+          trigger: scene,
+          start: "top center",
+          end: "bottom center",
+          onToggle: (self) => {
+            if (self.isActive) setActiveProject(i);
+          },
+        });
+
+        // pin every card except the last, so the next one scrolls over it
+        if (i < scenes.length - 1) {
+          ScrollTrigger.create({
+            trigger: scene,
+            start: "top top",
+            end: "bottom top",
+            pin: cards[i],
+            pinSpacing: false,
+          });
+        }
+      });
+    }, projectsRef);
 
     return () => ctx.revert();
   }, []);
@@ -151,43 +218,29 @@ const Home = () => {
       </section>
 
       {/* Projects Section */}
-      <section className={s.projects} id="projects">
+      <section className={s.projects} id="projects" ref={projectsRef}>
         <div className={s.outer_row}>
-          <ScrollIndicator targetSelector={`.${s.project_card}`} count={3} />
+          <div className={s.indicator_wrapper}>
+            <ScrollIndicator count={projects.length} active={activeProject} />
+          </div>
+
           <div className={s.inner_row}>
-            <a href="#" className={`${s.cols} ${s.project_card}`}>
-              <img src={Jvin} alt="Jvin site" />
-              <div className={s.chip_and_texts}>
-                <div className={s.chips}>Client Project</div>
-                <h6>Product Designer Portfolio</h6>
-                <p>
-                  Part-time freelance front-end development for a live client
-                  portfolio site
-                </p>
+            {projects.map((p, i) => (
+              <div className={s.project_scene} key={p.title}>
+                <a
+                  href="#"
+                  className={`${s.cols} ${s.project_card}`}
+                  style={{ zIndex: i + 1 }}
+                >
+                  <img src={p.img} alt={p.alt} />
+                  <div className={s.chip_and_texts}>
+                    <div className={s.chips}>{p.chip}</div>
+                    <h6>{p.title}</h6>
+                    <p>{p.desc}</p>
+                  </div>
+                </a>
               </div>
-            </a>
-            <a href="#" className={`${s.cols} ${s.project_card}`}>
-              <img src={Banwa} alt="Banwa site" />
-              <div className={s.chip_and_texts}>
-                <div className={s.chips}>Backend Development</div>
-                <h6>BANWA: Backend & API Architecture</h6>
-                <p>
-                  API development, hosting, and access control for a local
-                  government service platform
-                </p>
-              </div>
-            </a>
-            <a href="#" className={`${s.cols} ${s.project_card}`}>
-              <img src={SquidPay} alt="SquidPay site" />
-              <div className={s.chip_and_texts}>
-                <div className={s.chips}>Personal Project</div>
-                <h6>Fintech Landing Page (Concept Build)</h6>
-                <p>
-                  Self-initiated front-end project replicating a payments
-                  platform landing page
-                </p>
-              </div>
-            </a>
+            ))}
           </div>
         </div>
       </section>
@@ -216,7 +269,7 @@ const Home = () => {
 
       {/* Beyond the code Section */}
       <section className={s.beyond} ref={aboutRef} id="beyond">
-        <div className={s.textCard}>
+        <div className={s.textCard} ref={titleRef}>
           <h1>Beyond the code</h1>
           <p>
             Photography is where I slow down and look at things differently.
@@ -231,6 +284,11 @@ const Home = () => {
           <div className={`${s.card} ${s.card4}`} aria-hidden="true" />
           <div className={`${s.card} ${s.card1}`} aria-hidden="true" />
         </div>
+      </section>
+
+      {/* The End Section */}
+      <section className={s.the_end} id="beyond">
+        <h1>THE END</h1>
       </section>
     </>
   );
