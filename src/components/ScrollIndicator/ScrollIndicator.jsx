@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./ScrollIndicator.module.scss";
 
-export default function ScrollIndicator({ targetSelector, count }) {
+export default function ScrollIndicator({ targetSelector, count, active: activeProp }) {
   const [active, setActive] = useState(0);
   const elementsRef = useRef([]);
+  const isControlled = activeProp !== undefined;
 
   useEffect(() => {
-    const elements = [...document.querySelectorAll(targetSelector)];
+    if (isControlled || !targetSelector) return;
 
+    const elements = [...document.querySelectorAll(targetSelector)];
     if (!elements.length) return;
 
     elementsRef.current = elements;
@@ -21,22 +23,21 @@ export default function ScrollIndicator({ targetSelector, count }) {
           }
         });
       },
-      {
-        threshold: 0.6,
-      },
+      { threshold: 0.6 }
     );
 
     elements.forEach((el) => observer.observe(el));
-
     return () => observer.disconnect();
-  }, [targetSelector]);
+  }, [targetSelector, isControlled]);
+
+  const currentActive = isControlled ? activeProp : active;
 
   return (
     <div className={s.indicator}>
       {Array.from({ length: count }).map((_, index) => (
         <span
           key={index}
-          className={`${s.dot} ${active === index ? s.active : ""}`}
+          className={`${s.dot} ${currentActive === index ? s.active : ""}`}
         />
       ))}
     </div>
