@@ -9,10 +9,15 @@ import Home from "./pages/Home/Home.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Noise from "./components/Noise/Noise.jsx";
 
+import Loading from "./components/Loaders/Loader.jsx";
+import useAppLoader from "./hooks/useAppLoader.js";
+
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const lenisRef = useRef();
+
+  const loading = useAppLoader();
 
   useEffect(() => {
     const lenis = lenisRef.current?.lenis;
@@ -28,23 +33,30 @@ function App() {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    ScrollTrigger.refresh();
-
     return () => {
       gsap.ticker.remove(update);
       lenis.off("scroll", ScrollTrigger.update);
     };
   }, []);
 
+  // Everything is loaded
+  useEffect(() => {
+    if (!loading) {
+      ScrollTrigger.refresh();
+    }
+  }, [loading]);
+
   return (
     <>
+      {loading && <Loading />}
+
       <Noise>
         <ReactLenis
           root
           ref={lenisRef}
           options={{
             anchors: true,
-            duration: 1.2,
+            duration: 3,
             smoothWheel: true,
           }}
         />
