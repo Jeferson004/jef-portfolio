@@ -2,6 +2,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
+  // overflow: clip;
 }
 
 .noiseOverlay {
@@ -13,18 +14,26 @@
 
   pointer-events: none;
   
-  z-index: 999;
+  z-index: 0;
 }
 
-.mesh {
-  position: absolute;
-  top: -212px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 780px;
-  height: 780px;
-  background-color: #f32967;
-  filter: blur(800px);
-  pointer-events: none;
-  z-index: -1;
+.mesh_container {
+  width: 100%;
+  position: relative;
+  inset: 0;
+  z-index: 0;
+  display: none;
+  
+  .mesh {
+    position: absolute;
+    top: -212px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 780px;
+    height: 780px;
+    background-color: rgba(243, 41, 103, 0.48);
+    filter: blur(800px);
+    pointer-events: none;
+    z-index: 0;
+  }
 }

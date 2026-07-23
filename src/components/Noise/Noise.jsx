@@ -64,11 +64,15 @@ const Noise = ({ children, patternRefreshInterval = 2, patternAlpha = 15 }) => {
   }, [patternRefreshInterval, patternAlpha]);
 
   return (
-    <div className={s.wrapper}>
-      <div className={s.mesh}></div>
-      <canvas ref={grainRef} className={s.noiseOverlay} />
-      {children}
-    </div>
+    <>
+      <div className={s.mesh_container}>
+        <div className={s.mesh}></div>
+      </div>
+      <div className={s.wrapper}>
+        <canvas ref={grainRef} className={s.noiseOverlay} />
+        {children}
+      </div>
+    </>
   );
 };
 
