@@ -114,6 +114,7 @@
     white-space: nowrap;
     color: transparent;
     -webkit-text-stroke: 1px #333;
+    overflow: clip;
   }
 
   .circle_wrapper {
@@ -151,46 +152,59 @@
 
 .projects {
   .outer_row {
+    .indicator_wrapper {
+      position: sticky;
+      top: 50vh;
+      align-self: flex-start;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
     .inner_row {
       .project_scene {
-        &:not(:last-child) {
-          margin-bottom: 100px;
-        }
+        height: 100vh;
       }
 
-      .cols {
-        img {
-          height: auto;
-          width: 100%;
-          max-width: 496px;
-          background-size: cover;
-          margin-inline: auto;
-          margin-bottom: 32px;
-        }
+      .sticky_card {
+        .cols {
+          .project_image {
+            height: auto;
+            width: 100%;
+            max-width: 34.44%;
+            background-size: cover;
 
-        .chip_and_texts {
-          .chips {
-            padding: 8px 16px;
-            border-radius: 1000px;
-            border: 1px solid black;
-            width: max-content;
-            font-size: clamp(1rem, 0.907rem + 0.38vw, 1.25rem);
-            font-weight: 400;
-            line-height: clamp(1.5rem, 1.361rem + 0.57vw, 1.875rem);
-            margin-bottom: 12px;
+            img {
+              margin-inline: auto;
+              margin-bottom: 32px;
+            }
           }
 
-          h6 {
-            font-size: clamp(1.5rem, 0.943rem + 2.29vw, 3rem);
-            font-weight: 900;
-            line-height: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);
-            margin-bottom: 12px;
-          }
+          .chip_and_texts {
+            max-width: 704px;
+            width: 100%;
 
-          p {
-            font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
-            font-weight: 400;
-            line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
+            .chips {
+              padding: 8px 16px;
+              border-radius: 1000px;
+              border: 1px solid black;
+              width: max-content;
+              font-size: clamp(1rem, 0.907rem + 0.38vw, 1.25rem);
+              font-weight: 400;
+              line-height: clamp(1.5rem, 1.361rem + 0.57vw, 1.875rem);
+              margin-bottom: 12px;
+            }
+
+            h6 {
+              font-size: clamp(1.5rem, 0.943rem + 2.29vw, 3rem);
+              font-weight: 900;
+              line-height: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);
+              margin-bottom: 12px;
+            }
+
+            p {
+              font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
+              font-weight: 400;
+              line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
+            }
           }
         }
       }
@@ -413,13 +427,13 @@
       margin: 0 auto;
       align-items: center;
 
-      .indicator_wrapper {
-        position: sticky;
-        top: 50vh;
-        align-self: flex-start;
-        transform: translateY(-50%);
-        z-index: 10;
-      }
+      // .indicator_wrapper {
+      //   position: sticky;
+      //   top: 50vh;
+      //   align-self: flex-start;
+      //   transform: translateY(-50%);
+      //   z-index: 10;
+      // }
 
       .inner_row {
         flex: 1;
@@ -427,10 +441,10 @@
         display: flex;
         flex-direction: column;
 
-        .cols:first-child,
-        .cols:nth-child(2) {
-          margin-bottom: 100px;
-        }
+        // .cols:first-child,
+        // .cols:nth-child(2) {
+        //   margin-bottom: 100px;
+        // }
 
         .project_scene {
           height: 100vh;
@@ -443,18 +457,20 @@
           }
         }
 
-        .cols {
-          width: 100%;
-          display: flex;
-          flex-direction: row-reverse;
-          align-items: center;
-          justify-content: space-between;
-          column-gap: 24px;
-          background: #efdce3;
-          // margin-top: 200px;
-          // backdrop-filter: blur(64px);
-          padding: 32px;
-          border-radius: 24px;
+        .sticky_card {
+          .cols {
+            width: 100%;
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
+            justify-content: space-between;
+            column-gap: 24px;
+            // background: #efdce3;
+            // margin-top: 200px;
+            // backdrop-filter: blur(64px);
+            // padding: 32px;
+            // border-radius: 24px;
+          }
         }
       }
     }
@@ -668,4 +684,24 @@
   .outline_text {
     text-align: center;
   }
+}
+
+.inner_row {
+  position: relative;
+}
+
+.scroll_track {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sticky_card {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  z-index: 1;
 }

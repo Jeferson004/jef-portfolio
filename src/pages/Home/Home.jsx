@@ -10,9 +10,9 @@ import linkedinIcon from "../../assets/linkedin_icon.svg";
 import githubIcon from "../../assets/github_icon.svg";
 import gmailIcon from "../../assets/gmail_icon.svg";
 import Avatar from "../../assets/avatar.png";
-import Jvin from "../../assets/jvin_site.png";
+import Jvin from "../../assets/jvin.png";
 import Banwa from "../../assets/banwa.png";
-import SquidPay from "../../assets/squid.png";
+import SquidPay from "../../assets/squidpay.png";
 
 import { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -44,69 +44,142 @@ const Home = () => {
       desc: "Self-initiated front-end project replicating a payments platform landing page",
     },
   ];
-  const aboutRef = useRef(null);
+
+  const projectRef = useRef(null);
+  const beyondRef = useRef(null);
   const titleRef = useRef(null);
   const projectsRef = useRef(null);
-  const [activeProject, setActiveProject] = useState(0);
+  const cardContentRef = useRef(null);
+  const aboutTitleRef = useRef(null);
+  const aboutTextRef = useRef(null);
 
+  // activeProject drives the ScrollIndicator instantly.
+  const [activeProject, setActiveProject] = useState(0);
+  // displayIndex drives what image/text is actually shown, after the fade-out.
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const displayIndexRef = useRef(0);
+
+  // Hero process section animation
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const speeds = [-24, -24, -24, -24, -24, -24];
-      gsap.utils.toArray(`.${s.card}`).forEach((card, i) => {
-        gsap.to(card, {
-          y: speeds[i],
-          ease: "none",
-          scrollTrigger: {
-            trigger: aboutRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      });
-      gsap.from(titleRef.current, {
-        y: 80,
-        opacity: 0,
+      const items = gsap.utils
+        .toArray(`.${s.cols}`)
+        .flatMap((col) => Array.from(col.children));
+
+      gsap.from(items, {
+        clipPath: "inset(0 0 100% 0)",
+        y: 40,
+        stagger: 0.15,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: titleRef.current,
+          trigger: `.${s.processes}`,
           start: "top 80%",
-          end: "top 50%",
-          scrub: true,
+          toggleActions: "play none none none",
         },
       });
-    }, aboutRef);
+    });
+
     return () => ctx.revert();
   }, []);
+
+  // Swaps the visible project content, with a fade-out -> swap -> fade-in.
+  const changeDisplayedProject = (index) => {
+    if (displayIndexRef.current === index) return;
+    displayIndexRef.current = index;
+
+    const image = cardContentRef.current.querySelector(
+      `.${s.project_image} img`,
+    );
+
+    gsap.to(image, {
+      opacity: 0,
+      duration: 0.25,
+      ease: "power1.in",
+      onComplete: () => setDisplayIndex(index),
+    });
+  };
+
+  // Fade the new content in every time displayIndex changes.
+  useLayoutEffect(() => {
+    if (!cardContentRef.current) return;
+
+    const image = cardContentRef.current.querySelector(
+      `.${s.project_image} img`,
+    );
+    const texts = cardContentRef.current.querySelectorAll(
+      `.${s.chip_and_texts} > *`,
+    );
+
+    gsap.set(texts, {
+      clipPath: "inset(0 0 100% 0)",
+      y: 40,
+    });
+
+    const tl = gsap.timeline();
+
+    tl.fromTo(
+      image,
+      { opacity: 0 },
+      {
+        opacity: 1,
+        duration: 0.35,
+        ease: "power1.out",
+      },
+    ).to(
+      texts,
+      {
+        clipPath: "inset(0 0 0% 0)",
+        y: 0,
+        stagger: 0.15,
+        duration: 0.45,
+        ease: "power2.out",
+      },
+      "-=0.15",
+    );
+  }, [displayIndex]);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const scenes = gsap.utils.toArray(`.${s.project_scene}`);
-      const cards = gsap.utils.toArray(`.${s.project_card}`);
 
       scenes.forEach((scene, i) => {
-        // drives the scroll indicator directly, no IntersectionObserver
         ScrollTrigger.create({
           trigger: scene,
           start: "top center",
           end: "bottom center",
-          onToggle: (self) => {
-            if (self.isActive) setActiveProject(i);
+          onEnter: () => {
+            setActiveProject(i);
+            changeDisplayedProject(i);
+          },
+          onEnterBack: () => {
+            setActiveProject(i);
+            changeDisplayedProject(i);
           },
         });
-
-        // pin every card except the last, so the next one scrolls over it
-        if (i < scenes.length - 1) {
-          ScrollTrigger.create({
-            trigger: scene,
-            start: "top top",
-            end: "bottom top",
-            pin: cards[i],
-            pinSpacing: false,
-          });
-        }
       });
     }, projectsRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const current = projects[displayIndex];
+
+  // About section animation
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from([aboutTitleRef.current, aboutTextRef.current], {
+        clipPath: "inset(0 0 100% 0)",
+        y: 40,
+        stagger: 0.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: projectRef.current,
+          start: "top 80%",
+          end: "top 30%",
+          toggleActions: "play none none none",
+        },
+      });
+    }, projectRef);
 
     return () => ctx.revert();
   }, []);
@@ -224,23 +297,34 @@ const Home = () => {
             <ScrollIndicator count={projects.length} active={activeProject} />
           </div>
 
-          <div className={s.inner_row}>
-            {projects.map((p, i) => (
-              <div className={s.project_scene} key={p.title}>
-                <a
-                  href="#"
-                  className={`${s.cols} ${s.project_card}`}
-                  style={{ zIndex: i + 1 }}
-                >
-                  <img src={p.img} alt={p.alt} />
-                  <div className={s.chip_and_texts}>
-                    <div className={s.chips}>{p.chip}</div>
-                    <h6>{p.title}</h6>
-                    <p>{p.desc}</p>
-                  </div>
-                </a>
-              </div>
-            ))}
+          <div
+            className={s.inner_row}
+            style={{ height: `${projects.length * 100}vh` }}
+          >
+            {/* Invisible scroll track: drives scroll length + trigger points only */}
+            <div className={s.scroll_track}>
+              {projects.map((p) => (
+                <div className={s.project_scene} key={p.title} />
+              ))}
+            </div>
+
+            {/* Sticky visual: stays on screen, content swaps via GSAP */}
+            <div className={s.sticky_card}>
+              <a
+                href="#"
+                className={`${s.cols} ${s.project_card}`}
+                ref={cardContentRef}
+              >
+                <div className={s.project_image}>
+                  <img src={current.img} alt={current.alt} />
+                </div>
+                <div className={s.chip_and_texts}>
+                  <div className={s.chips}>{current.chip}</div>
+                  <h6>{current.title}</h6>
+                  <p>{current.desc}</p>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -249,10 +333,11 @@ const Home = () => {
       <Marquee />
 
       {/* About me Section */}
-      <section className={s.about} id="about">
+      <section className={s.about} id="about" ref={projectRef}>
         <div className={s.header_and_parag}>
-          <h1>About</h1>
-          <h6>
+          <h1 ref={aboutTitleRef}>About</h1>
+
+          <h6 ref={aboutTextRef}>
             The first time I saw code, I was hooked by curiosity. How did a
             button change color on click? How did a page transition to another
             with just a few lines? I had to know, so I started recreating those
@@ -268,7 +353,7 @@ const Home = () => {
       </section>
 
       {/* Beyond the code Section */}
-      <section className={s.beyond} ref={aboutRef} id="beyond">
+      <section className={s.beyond} ref={beyondRef} id="beyond">
         <div className={s.textCard} ref={titleRef}>
           <h1>Beyond the code</h1>
           <p>
