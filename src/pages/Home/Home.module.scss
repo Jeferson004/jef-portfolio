@@ -15,9 +15,9 @@
   padding: 165px 16px 105px 16px;
 }
 
-.circle_container {
-  display: none;
-}
+// .circle_container {
+//   display: none;
+// }
 
 .hero {
   .header_and_parag {
@@ -107,15 +107,22 @@
 .outline_text_and_profile {
   margin-top: 56px;
   margin-bottom: 24px;
+  overflow: clip;
 
-  .outline_text {
+ .outline_text {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+
+  text {
     font-size: clamp(4.25rem, 1.186rem + 12.57vw, 12.5rem);
-    line-height: 100%;
-    white-space: nowrap;
-    color: transparent;
-    -webkit-text-stroke: 1px #333;
-    overflow: clip;
+    font-weight: 900;
+    fill: none;
+    stroke: #333;
+    stroke-width: 1px;
   }
+}
 
   .circle_wrapper {
     display: none;
@@ -306,83 +313,83 @@
 }
 
 @media screen and (min-width: 768px) {
-  .circle_container {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-    display: flex;
-  }
+  // .circle_container {
+  //   position: absolute;
+  //   inset: 0;
+  //   overflow: hidden;
+  //   pointer-events: none;
+  //   z-index: 0;
+  //   display: flex;
+  // }
 
-  .background {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 1440px;
-    height: 100%;
-    transform: translateX(-50%);
-  }
+  // .background {
+  //   position: absolute;
+  //   top: 0;
+  //   bottom: 0;
+  //   left: 50%;
+  //   width: 1440px;
+  //   height: 100%;
+  //   transform: translateX(-50%);
+  // }
 
-  .circle_1,
-  .circle_2 {
-    position: absolute;
-    border: 1px solid #000;
-    border-radius: 50%;
+  // .circle_1,
+  // .circle_2 {
+  //   position: absolute;
+  //   border: 1px solid #000;
+  //   border-radius: 50%;
 
-    .orbit {
-      position: absolute;
-      inset: 0;
-      animation: orbit 8s linear infinite;
-    }
+  //   .orbit {
+  //     position: absolute;
+  //     inset: 0;
+  //     animation: orbit 8s linear infinite;
+  //   }
 
-    .dot {
-      position: absolute;
-      top: 50%;
-      right: -7.5px;
+  //   .dot {
+  //     position: absolute;
+  //     top: 50%;
+  //     right: -7.5px;
 
-      width: 15px;
-      height: 15px;
+  //     width: 15px;
+  //     height: 15px;
 
-      transform: translateY(-50%);
-      border-radius: 50%;
-      background: #000;
-    }
-  }
+  //     transform: translateY(-50%);
+  //     border-radius: 50%;
+  //     background: #000;
+  //   }
+  // }
 
-  .circle_1 {
-    width: 290px;
-    height: 290px;
-    top: 175px;
-    left: -145px;
+  // .circle_1 {
+  //   width: 290px;
+  //   height: 290px;
+  //   top: 175px;
+  //   left: -145px;
 
-    .orbit {
-      animation-duration: 6s;
-    }
-  }
+  //   .orbit {
+  //     animation-duration: 6s;
+  //   }
+  // }
 
-  .circle_2 {
-    width: 457px;
-    height: 457px;
-    top: 212px;
-    right: -228px;
+  // .circle_2 {
+  //   width: 457px;
+  //   height: 457px;
+  //   top: 212px;
+  //   right: -228px;
 
-    .orbit {
-      animation-duration: 10s;
-      animation-direction: reverse;
-    }
-  }
+  //   .orbit {
+  //     animation-duration: 10s;
+  //     animation-direction: reverse;
+  //   }
+  // }
 
-  @keyframes orbit {
-    from {
-      transform: rotate(0deg);
-    }
+  // @keyframes orbit {
+  //   from {
+  //     transform: rotate(0deg);
+  //   }
 
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  //   to {
+  //     transform: rotate(360deg);
+  //   }
+  // }
 
   .hero {
     display: flex;
@@ -459,6 +466,9 @@
 
         .sticky_card {
           .cols {
+            .project_image {
+              padding-inline: 64px;
+            }
             width: 100%;
             display: flex;
             flex-direction: row-reverse;

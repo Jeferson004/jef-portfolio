@@ -45,13 +45,15 @@ const Home = () => {
     },
   ];
 
-  const projectRef = useRef(null);
+  const aboutRef = useRef(null);
   const beyondRef = useRef(null);
   const titleRef = useRef(null);
   const projectsRef = useRef(null);
   const cardContentRef = useRef(null);
   const aboutTitleRef = useRef(null);
   const aboutTextRef = useRef(null);
+  const outlineSvgRef = useRef(null);
+  const outlineTextRef = useRef(null);
 
   // activeProject drives the ScrollIndicator instantly.
   const [activeProject, setActiveProject] = useState(0);
@@ -73,8 +75,45 @@ const Home = () => {
         ease: "power2.out",
         scrollTrigger: {
           trigger: `.${s.processes}`,
-          start: "top 80%",
+          start: "top 65%",
           toggleActions: "play none none none",
+          markers: true,
+        },
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
+  // new effect — runs once, animates dashoffset from full length to 0
+  useLayoutEffect(() => {
+    const svg = outlineSvgRef.current;
+    const text = outlineTextRef.current;
+    if (!svg || !text) return;
+
+    const ctx = gsap.context(() => {
+      // size the viewBox to the actual rendered text
+      const bbox = text.getBBox();
+      const pad = 4;
+      svg.setAttribute(
+        "viewBox",
+        `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`,
+      );
+
+      const length = text.getComputedTextLength() * 1.6; // slack for per-letter strokes
+      gsap.set(text, { strokeDasharray: length, strokeDashoffset: length });
+
+      ScrollTrigger.create({
+        trigger: svg,
+        start: "top 65%",
+        once: true, // <- only ever plays once
+        markers: true,
+        onEnter: () => {
+          gsap.to(text, {
+            strokeDashoffset: 0,
+            duration: 2,
+            ease: "power2.inOut",
+          });
         },
       });
     });
@@ -170,23 +209,23 @@ const Home = () => {
       gsap.from([aboutTitleRef.current, aboutTextRef.current], {
         clipPath: "inset(0 0 100% 0)",
         y: 40,
-        stagger: 0.2,
+        stagger: 0.15,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: projectRef.current,
-          start: "top 80%",
-          end: "top 30%",
+          trigger: aboutRef.current,
+          start: "top 65%",
           toggleActions: "play none none none",
+          markers: true,
         },
       });
-    }, projectRef);
+    }, aboutRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
     <>
-      <div className={s.circle_container}>
+      {/* <div className={s.circle_container}>
         <div className={s.background}>
           <div className={s.circle_1}>
             <div className={s.orbit}>
@@ -200,7 +239,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Hero Section */}
       <section className={s.hero} id="hero">
@@ -230,7 +269,11 @@ const Home = () => {
           </div>
 
           <div className={s.outline_text_and_profile}>
-            <h1 className={s.outline_text}>LET'S BUILD</h1>
+            <svg className={s.outline_text} ref={outlineSvgRef}>
+              <text ref={outlineTextRef} x="0" y="0.8em">
+                LET'S BUILD
+              </text>
+            </svg>
             <div className={s.circle_wrapper}>
               <div className={s.circle_text}>
                 <svg viewBox="0 0 200 200">
@@ -333,8 +376,8 @@ const Home = () => {
       <Marquee />
 
       {/* About me Section */}
-      <section className={s.about} id="about" ref={projectRef}>
-        <div className={s.header_and_parag}>
+      <section className={s.about} id="about">
+        <div className={s.header_and_parag} ref={aboutRef}>
           <h1 ref={aboutTitleRef}>About</h1>
 
           <h6 ref={aboutTextRef}>
