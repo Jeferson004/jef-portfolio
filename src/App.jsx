@@ -16,7 +16,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const lenisRef = useRef();
-
   const loading = useAppLoader();
 
   useEffect(() => {
@@ -39,10 +38,10 @@ function App() {
     };
   }, []);
 
-  // Everything is loaded
   useEffect(() => {
     if (!loading) {
       ScrollTrigger.refresh();
+      // document.body.style.backgroundColor = "red";
     }
   }, [loading]);
 

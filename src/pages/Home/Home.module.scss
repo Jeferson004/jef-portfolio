@@ -12,7 +12,7 @@
   max-width: 1440px;
   margin-inline: auto;
   width: 100%;
-  padding: 165px 16px 105px 16px;
+  padding: 105px 16px 105px 16px;
 }
 
 // .circle_container {
@@ -173,46 +173,57 @@
 
       .sticky_card {
         .cols {
-          .project_image {
-            height: auto;
-            width: 100%;
-            max-width: 34.44%;
-            background-size: cover;
+          .project_card_container {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            row-gap: 32px;
 
-            img {
-              margin-inline: auto;
-              margin-bottom: 32px;
+            .project_image {
+              height: 278px;
+              width: 100%;
+              background-size: cover;
+  
+              img {
+                margin-inline: auto;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 32px;
+                // margin-bottom: 32px;
+              }
+            }
+  
+            .chip_and_texts {
+              max-width: 704px;
+              width: 100%;
+  
+              .chips {
+                padding: 8px 16px;
+                border-radius: 1000px;
+                border: 1px solid black;
+                width: max-content;
+                font-size: clamp(1rem, 0.907rem + 0.38vw, 1.25rem);
+                font-weight: 400;
+                line-height: clamp(1.5rem, 1.361rem + 0.57vw, 1.875rem);
+                margin-bottom: 12px;
+              }
+  
+              h6 {
+                font-size: clamp(1.5rem, 0.943rem + 2.29vw, 3rem);
+                font-weight: 900;
+                line-height: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);
+                margin-bottom: 12px;
+              }
+  
+              p {
+                font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
+                font-weight: 400;
+                line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
+              }
             }
           }
 
-          .chip_and_texts {
-            max-width: 704px;
-            width: 100%;
-
-            .chips {
-              padding: 8px 16px;
-              border-radius: 1000px;
-              border: 1px solid black;
-              width: max-content;
-              font-size: clamp(1rem, 0.907rem + 0.38vw, 1.25rem);
-              font-weight: 400;
-              line-height: clamp(1.5rem, 1.361rem + 0.57vw, 1.875rem);
-              margin-bottom: 12px;
-            }
-
-            h6 {
-              font-size: clamp(1.5rem, 0.943rem + 2.29vw, 3rem);
-              font-weight: 900;
-              line-height: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);
-              margin-bottom: 12px;
-            }
-
-            p {
-              font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
-              font-weight: 400;
-              line-height: clamp(1.5rem, 1.314rem + 0.76vw, 2rem);
-            }
-          }
         }
       }
     }
@@ -466,21 +477,26 @@
 
         .sticky_card {
           .cols {
-            .project_image {
-              padding-inline: 64px;
+            .project_card_container {
+              flex-direction: row;
+              .project_image {
+                padding-inline: 64px;
+                max-width: 34.44%;
+                height: 100%;
+              }
+              width: 100%;
+              display: flex;
+              flex-direction: row-reverse;
+              align-items: center;
+              justify-content: space-between;
+              column-gap: 24px;
+              // background: #efdce3;
+              // margin-top: 200px;
+              // backdrop-filter: blur(64px);
+              // padding: 32px;
+              // border-radius: 24px;
             }
-            width: 100%;
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: center;
-            justify-content: space-between;
-            column-gap: 24px;
-            // background: #efdce3;
-            // margin-top: 200px;
-            // backdrop-filter: blur(64px);
-            // padding: 32px;
-            // border-radius: 24px;
-          }
+            }
         }
       }
     }

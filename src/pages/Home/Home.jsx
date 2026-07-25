@@ -47,17 +47,15 @@ const Home = () => {
 
   const aboutRef = useRef(null);
   const beyondRef = useRef(null);
-  const titleRef = useRef(null);
   const projectsRef = useRef(null);
   const cardContentRef = useRef(null);
   const aboutTitleRef = useRef(null);
   const aboutTextRef = useRef(null);
+  const beyondTitleRef = useRef(null);
+  const beyondTextRef = useRef(null);
   const outlineSvgRef = useRef(null);
   const outlineTextRef = useRef(null);
-
-  // activeProject drives the ScrollIndicator instantly.
   const [activeProject, setActiveProject] = useState(0);
-  // displayIndex drives what image/text is actually shown, after the fade-out.
   const [displayIndex, setDisplayIndex] = useState(0);
   const displayIndexRef = useRef(0);
 
@@ -77,7 +75,6 @@ const Home = () => {
           trigger: `.${s.processes}`,
           start: "top 65%",
           toggleActions: "play none none none",
-          markers: true,
         },
       });
     });
@@ -106,8 +103,7 @@ const Home = () => {
       ScrollTrigger.create({
         trigger: svg,
         start: "top 65%",
-        once: true, // <- only ever plays once
-        markers: true,
+        once: true,
         onEnter: () => {
           gsap.to(text, {
             strokeDashoffset: 0,
@@ -215,10 +211,27 @@ const Home = () => {
           trigger: aboutRef.current,
           start: "top 65%",
           toggleActions: "play none none none",
-          markers: true,
         },
       });
     }, aboutRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from([beyondTitleRef.current, beyondTextRef.current], {
+        clipPath: "inset(0 0 100% 0)",
+        y: 40,
+        stagger: 0.15,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: beyondRef.current,
+          start: "top 65%",
+          toggleActions: "play none none none",
+        },
+      });
+    }, beyondRef);
 
     return () => ctx.revert();
   }, []);
@@ -358,13 +371,15 @@ const Home = () => {
                 className={`${s.cols} ${s.project_card}`}
                 ref={cardContentRef}
               >
-                <div className={s.project_image}>
-                  <img src={current.img} alt={current.alt} />
-                </div>
-                <div className={s.chip_and_texts}>
-                  <div className={s.chips}>{current.chip}</div>
-                  <h6>{current.title}</h6>
-                  <p>{current.desc}</p>
+                <div className={s.project_card_container}>
+                  <div className={s.project_image}>
+                    <img src={current.img} alt={current.alt} />
+                  </div>
+                  <div className={s.chip_and_texts}>
+                    <div className={s.chips}>{current.chip}</div>
+                    <h6>{current.title}</h6>
+                    <p>{current.desc}</p>
+                  </div>
                 </div>
               </a>
             </div>
@@ -396,10 +411,10 @@ const Home = () => {
       </section>
 
       {/* Beyond the code Section */}
-      <section className={s.beyond} ref={beyondRef} id="beyond">
-        <div className={s.textCard} ref={titleRef}>
-          <h1>Beyond the code</h1>
-          <p>
+      <section className={s.beyond} id="beyond">
+        <div className={s.textCard} ref={beyondRef}>
+          <h1 ref={beyondTitleRef}>Beyond the code</h1>
+          <p ref={beyondTextRef}>
             Photography is where I slow down and look at things differently.
           </p>
         </div>
