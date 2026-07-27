@@ -1,23 +1,24 @@
 @use "../../styles/global.scss" as *;
 
 // .hero {
-//   margin-top: 96px;
+//   padding-bottom: 0;
 // }
 
 .hero,
 .projects,
-.marquee,
 .about,
 .beyond {
   max-width: 1440px;
   margin-inline: auto;
   width: 100%;
-  padding: 105px 16px 105px 16px;
+  padding-inline: 16px;
 }
 
-// .circle_container {
-//   display: none;
-// }
+
+.about,
+.beyond {
+  padding-block: 154px;
+}
 
 .hero {
   .header_and_parag {
@@ -90,7 +91,6 @@
   row-gap: 24px;
   align-items: flex-start;
   width: max-content;
-  margin: -56px 0 24px 108px;
 
   .links {
     padding: 12px;
@@ -109,20 +109,21 @@
   margin-bottom: 24px;
   overflow: clip;
 
- .outline_text {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
+  .outline_text {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-left: -26.81%;
+    // overflow: visible;
 
-  text {
-    font-size: clamp(4.25rem, 1.186rem + 12.57vw, 12.5rem);
-    font-weight: 900;
-    fill: none;
-    stroke: #333;
-    stroke-width: 1px;
+    text {
+      font-size: clamp(4.25rem, 1.186rem + 12.57vw, 12.5rem);
+      font-weight: 900;
+      fill: none;
+      stroke: #333;
+      stroke-width: 1px;
+    }
   }
-}
 
   .circle_wrapper {
     display: none;
@@ -183,7 +184,7 @@
               height: 278px;
               width: 100%;
               background-size: cover;
-  
+
               img {
                 margin-inline: auto;
                 width: 100%;
@@ -193,11 +194,11 @@
                 // margin-bottom: 32px;
               }
             }
-  
+
             .chip_and_texts {
               max-width: 704px;
               width: 100%;
-  
+
               .chips {
                 padding: 8px 16px;
                 border-radius: 1000px;
@@ -208,14 +209,14 @@
                 line-height: clamp(1.5rem, 1.361rem + 0.57vw, 1.875rem);
                 margin-bottom: 12px;
               }
-  
+
               h6 {
                 font-size: clamp(1.5rem, 0.943rem + 2.29vw, 3rem);
                 font-weight: 900;
                 line-height: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);
                 margin-bottom: 12px;
               }
-  
+
               p {
                 font-size: clamp(1rem, 0.814rem + 0.76vw, 1.5rem);
                 font-weight: 400;
@@ -223,7 +224,6 @@
               }
             }
           }
-
         }
       }
     }
@@ -324,6 +324,14 @@
 }
 
 @media screen and (min-width: 768px) {
+  .hero,
+  .projects,
+  .marquee,
+  .about,
+  .beyond {
+    padding-inline: 124px;
+  }
+  
   // .circle_container {
   //   position: absolute;
   //   inset: 0;
@@ -478,12 +486,12 @@
         .sticky_card {
           .cols {
             .project_card_container {
-              flex-direction: row;
               .project_image {
                 padding-inline: 64px;
-                max-width: 34.44%;
+                max-width: 496px;
                 height: 100%;
               }
+
               width: 100%;
               display: flex;
               flex-direction: row-reverse;
@@ -496,7 +504,7 @@
               // padding: 32px;
               // border-radius: 24px;
             }
-            }
+          }
         }
       }
     }
@@ -590,6 +598,11 @@
 @media screen and (min-width: 992px) {
   .socials_menu {
     display: flex;
+    position: fixed;
+    left: 108px;
+    right: 0;
+    top: 50vh;
+    z-index: 999;
   }
 
   .processes {
@@ -619,7 +632,7 @@
   .outline_text_and_profile {
     display: flex;
     align-items: center;
-    transform: translateX(-8.7%);
+    margin-left: -8.7%; // was: transform: translateX(-8.7%);
     justify-content: space-between;
     gap: 66.64px;
 
@@ -629,10 +642,15 @@
 
     .circle_wrapper {
       display: flex;
-      position: relative;
+      position: fixed;
+      bottom: 48px; // distance from bottom of screen
+      right: 48px; // distance from right of screen
+      // remove: top: 50vh;
+      // remove: transform: translateY(-50%);
       width: 161.71450805664062px;
       height: 161.71450805664062px;
       flex-shrink: 0;
+      z-index: 999;
 
       .circle_text {
         width: 100%;
@@ -685,10 +703,16 @@
       }
     }
   }
+}
 
-  .the_end {
-    min-height: 100vh;
-  }
+@media screen and (min-width: 1311px) {
+  // .hero,
+  // .projects,
+  // .marquee,
+  // .about,
+  // .beyond {
+  //   padding-inline: 124px;
+  // }
 }
 
 @media (max-width: 1480px) {
@@ -703,7 +727,7 @@
     margin: 56px auto 24px;
 
     .circle_wrapper {
-      display: none;
+      // display: none;
     }
   }
 

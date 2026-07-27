@@ -88,8 +88,9 @@ const Home = () => {
     const text = outlineTextRef.current;
     if (!svg || !text) return;
 
-    const ctx = gsap.context(() => {
-      // size the viewBox to the actual rendered text
+    let hasAnimated = false;
+
+    const updateViewBox = () => {
       const bbox = text.getBBox();
       const pad = 4;
       svg.setAttribute(
@@ -97,14 +98,22 @@ const Home = () => {
         `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`,
       );
 
-      const length = text.getComputedTextLength() * 1.6; // slack for per-letter strokes
-      gsap.set(text, { strokeDasharray: length, strokeDashoffset: length });
+      const length = text.getComputedTextLength() * 1.6;
+      gsap.set(text, {
+        strokeDasharray: length,
+        strokeDashoffset: hasAnimated ? 0 : length,
+      });
+    };
 
+    updateViewBox();
+
+    const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: svg,
         start: "top 65%",
         once: true,
         onEnter: () => {
+          hasAnimated = true;
           gsap.to(text, {
             strokeDashoffset: 0,
             duration: 2,
@@ -114,7 +123,13 @@ const Home = () => {
       });
     });
 
-    return () => ctx.revert();
+    const resizeObserver = new ResizeObserver(() => updateViewBox());
+    resizeObserver.observe(svg.parentElement);
+
+    return () => {
+      ctx.revert();
+      resizeObserver.disconnect();
+    };
   }, []);
 
   // Swaps the visible project content, with a fade-out -> swap -> fade-in.
@@ -430,9 +445,9 @@ const Home = () => {
       </section>
 
       {/* The End Section */}
-      <section className={s.the_end} id="beyond">
+      {/* <section className={s.the_end} id="beyond">
         <h1>THE END</h1>
-      </section>
+      </section> */}
     </>
   );
 };
