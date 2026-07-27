@@ -1,5 +1,5 @@
 import "./App.css";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
@@ -9,14 +9,12 @@ import Home from "./pages/Home/Home.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Noise from "./components/Noise/Noise.jsx";
 
-import Loading from "./components/Loaders/Loader.jsx";
-import useAppLoader from "./hooks/useAppLoader.js";
+import Loader from "./components/Loaders/Loader.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const lenisRef = useRef();
-  const loading = useAppLoader();
 
   useEffect(() => {
     const lenis = lenisRef.current?.lenis;
@@ -38,16 +36,9 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!loading) {
-      ScrollTrigger.refresh();
-      // document.body.style.backgroundColor = "red";
-    }
-  }, [loading]);
-
   return (
     <>
-      {loading && <Loading />}
+      <Loader />
 
       <Noise>
         <ReactLenis
