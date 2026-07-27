@@ -4,11 +4,20 @@ import s from "./Footer.module.scss";
 import linkedinIcon from "../../assets/linkedin_icon.svg";
 import githubIcon from "../../assets/github_icon.svg";
 import gmailIcon from "../../assets/gmail_icon.svg";
+import arrowup from "../../assets/arrowup_icon.svg";
 
 const Footer = () => {
   return (
     <footer className={s.footer}>
-      <section></section>
+      <div className={s.line_and_button}>
+        <div className={s.line}></div>
+        <a href="#hero">
+          <div className={s.text_and_button}>
+            <p>Back to top</p>
+            <img src={arrowup} alt="" />
+          </div>
+        </a>
+      </div>
 
       <nav className={s.nav}>
         <a href="#hero" className={`${s.links} ${s.logo}`}>
