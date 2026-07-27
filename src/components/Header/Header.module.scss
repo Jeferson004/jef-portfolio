@@ -6,12 +6,18 @@
   top: 0;
   left: 0;
   z-index: 1000;
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
 
   &.top {
     .nav {
       background-color: transparent;
       backdrop-filter: unset;
     }
+  }
+
+  &.hidden {
+    transform: translateY(-100%);
   }
 }
 
@@ -24,7 +30,7 @@
   background: rgba(255, 100, 147, 0.08);
   backdrop-filter: blur(10px);
   transition: background-color 0.3s ease-in-out;
-  
+
   .logo {
     @include logo;
 
@@ -41,7 +47,7 @@
 
   ul {
     margin-left: auto;
-    
+
     li {
       a:not(.activeStatus) {
         padding: 16px 24px;
@@ -49,6 +55,13 @@
         font-weight: 500;
         line-height: 24px;
         white-space: nowrap;
+        background-color: transparent;
+        border-radius: 16px;
+        transition: background-color 200ms ease-out;
+
+        &:hover {
+          background-color: rgba(255, 255, 255, 1);
+        }
       }
     }
   }

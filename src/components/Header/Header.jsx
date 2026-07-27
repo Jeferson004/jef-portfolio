@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import s from "./Header.module.scss";
 
 // images
@@ -6,8 +6,9 @@ import Humburger from "../../assets/humburger.svg";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  // const [lastScroll, setLastScroll] = useState(0);
   const [isTop, setIsTop] = useState(true);
+  const [hidden, setHidden] = useState(false);
+  const lastScroll = useRef(0);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -24,6 +25,19 @@ const Header = () => {
       const currentScroll = window.scrollY;
 
       setIsTop(currentScroll === 0);
+
+      // Ignore tiny scroll jitters
+      if (Math.abs(currentScroll - lastScroll.current) < 5) return;
+
+      if (currentScroll > lastScroll.current && currentScroll > 100) {
+        // scrolling down
+        setHidden(true);
+      } else {
+        // scrolling up
+        setHidden(false);
+      }
+
+      lastScroll.current = currentScroll;
     };
 
     window.addEventListener("scroll", handleScroll, {
@@ -60,6 +74,7 @@ const Header = () => {
       className={`
         ${s.header}
         ${isTop ? s.top : ""}
+        ${hidden ? s.hidden : ""}
       `}
     >
       <nav className={s.nav}>
