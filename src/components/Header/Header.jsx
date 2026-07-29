@@ -2,13 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import s from "./Header.module.scss";
 
 // images
-import Humburger from "../../assets/humburger.svg";
+import OpenMenu from "../../assets/open_menu.svg";
+import CloseMenu from "../../assets/close_menu.svg";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isTop, setIsTop] = useState(true);
   const [hidden, setHidden] = useState(false);
   const lastScroll = useRef(0);
+  const prevOverflow = useRef("");
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -51,21 +53,28 @@ const Header = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 992) {
+      if (window.innerWidth >= 992 && menuOpen) {
         setMenuOpen(false);
-        document.body.style.overflow = "";
-      } else {
-        document.body.style.overflow = menuOpen ? "hidden" : "";
       }
     };
-
-    handleResize();
 
     window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (menuOpen) {
+      prevOverflow.current = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = prevOverflow.current;
+    }
+
+    return () => {
+      document.body.style.overflow = prevOverflow.current;
     };
   }, [menuOpen]);
 
@@ -83,7 +92,10 @@ const Header = () => {
         </a>
 
         <div className={s.menu_icon} onClick={toggleMenu}>
-          <img src={Humburger} alt="Menu" />
+          <img
+            src={menuOpen ? CloseMenu : OpenMenu}
+            alt={menuOpen ? "Close menu" : "Open menu"}
+          />
         </div>
 
         <div className={`${s.menu_container} ${menuOpen ? s.open : ""}`}>
