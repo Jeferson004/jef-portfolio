@@ -9,22 +9,37 @@ const PHRASES = [
   "Let's get started.",
 ];
 
-const Loader = () => {
+const lockScroll = () => {
+  document.documentElement.style.overflow = "hidden";
+  document.body.style.overflow = "hidden";
+  document.body.style.touchAction = "none";
+};
+
+const unlockScroll = () => {
+  document.documentElement.style.overflow = "";
+  document.body.style.overflow = "";
+  document.body.style.touchAction = "";
+};
+
+const Loader = ({ lenisRef }) => {
   const loaderRef = useRef(null);
   const percentRef = useRef(null);
   const textRefs = useRef([]);
   const counter = useRef({ value: 0 });
 
   useEffect(() => {
+    lockScroll();
+    lenisRef?.current?.lenis?.stop();
+
     const loader = loaderRef.current;
     if (!loader) return;
 
+    const preventTouch = (e) => e.preventDefault();
+    document.addEventListener("touchmove", preventTouch, { passive: false });
+
     const ctx = gsap.context(() => {
-      // STEP 1: Build the post-load timeline, but keep it paused.
-      // Nothing in this timeline plays until tl.play() is called inside handleLoad().
       const tl = gsap.timeline({ paused: true });
 
-      // STEP 2a (queued, runs later): fade out the "%" counter
       tl.to(percentRef.current, {
         opacity: 0,
         y: -20,
@@ -32,7 +47,6 @@ const Loader = () => {
         ease: "power2.out",
       });
 
-      // STEP 2b (queued, runs later): each phrase fades in, holds, then fades out
       textRefs.current.forEach((el) => {
         if (!el) return;
 
@@ -52,21 +66,20 @@ const Loader = () => {
         });
       });
 
-      // STEP 2c (queued, runs last): whole loader slides down and off-screen
       tl.to(loader, {
         yPercent: 100,
         duration: 1.5,
         ease: "power4.inOut",
         onComplete: () => {
           loader.style.display = "none";
+          document.removeEventListener("touchmove", preventTouch);
+          unlockScroll();
+          lenisRef?.current?.lenis?.start();
         },
       });
 
-      // STEP 3: Starts immediately on mount — counts from 0 toward 0.
-      // BUG: value should be 99, not 0 — as written this tween does nothing
-      // because counter.current.value already starts at 0.
       gsap.to(counter.current, {
-        value: 0,
+        value: 99,
         duration: 20,
         ease: "none",
         onUpdate: () => {
@@ -76,13 +89,9 @@ const Loader = () => {
         },
       });
 
-      // STEP 5: Fires once, whenever the browser's "load" event happens
-      // (or immediately, in STEP 4, if load already fired before mount).
       const handleLoad = () => {
-        // STEP 5a: cancel the STEP 3 tween so it stops fighting this one
         gsap.killTweensOf(counter.current);
 
-        // STEP 5b: finish the count up to 100%
         gsap.to(counter.current, {
           value: 100,
           duration: 12,
@@ -92,33 +101,31 @@ const Loader = () => {
               counter.current.value,
             )}%`;
           },
-          // STEP 5c: once counter hits 100%, play the paused timeline
-          // built in STEP 2 (percent fade -> phrases -> loader exit)
           onComplete: () => {
             tl.play();
           },
         });
       };
 
-      // STEP 4: Decide when handleLoad() runs —
-      // immediately if the page already finished loading before this
-      // component mounted, otherwise wait for the real "load" event.
       if (document.readyState === "complete") {
         handleLoad();
       } else {
         window.addEventListener("load", handleLoad, { once: true });
       }
 
-      // STEP 6: Cleanup if the component unmounts before load/animation finishes
       return () => {
         window.removeEventListener("load", handleLoad);
         gsap.killTweensOf(counter.current);
       };
     }, loaderRef);
 
-    // STEP 7: Cleanup all GSAP tweens/timelines created in this context
-    return () => ctx.revert();
-  }, []);
+    return () => {
+      ctx.revert();
+      document.removeEventListener("touchmove", preventTouch);
+      unlockScroll();
+      lenisRef?.current?.lenis?.start();
+    };
+  }, [lenisRef]);
 
   return (
     <div ref={loaderRef} className={s.loader}>

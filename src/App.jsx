@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
@@ -15,6 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 function App() {
   const lenisRef = useRef();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const lenis = lenisRef.current?.lenis;
@@ -36,9 +37,21 @@ function App() {
     };
   }, []);
 
+  // Stop Lenis while the loader is mounted, resume once it's done
+  useEffect(() => {
+    const lenis = lenisRef.current?.lenis;
+    if (!lenis) return;
+
+    if (isLoading) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  }, [isLoading]);
+
   return (
     <>
-      <Loader />
+      {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
 
       <Noise>
         <ReactLenis
