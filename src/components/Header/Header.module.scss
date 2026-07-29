@@ -61,6 +61,7 @@
 
   ul {
     margin-left: auto;
+    padding-inline: 16px;
 
     li {
       a:not(.activeStatus) {
@@ -84,7 +85,6 @@
 .menu {
   display: flex;
   column-gap: 24px;
-  padding-inline: 16px;
 }
 
 .activeStatus {
@@ -193,6 +193,7 @@
 
     ul {
       margin-left: auto;
+      padding-inline: 0;
     }
 
     ul {
