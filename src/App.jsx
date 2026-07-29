@@ -9,7 +9,7 @@ import Home from "./pages/Home/Home.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Noise from "./components/Noise/Noise.jsx";
 
-// import Loader from "./components/Loaders/Loader.jsx";
+import Loader from "./components/Loaders/Loader.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -38,7 +38,7 @@ function App() {
 
   return (
     <>
-      {/* <Loader /> */}
+      <Loader />
 
       <Noise>
         <ReactLenis
