@@ -65,9 +65,9 @@
     li {
       a:not(.activeStatus) {
         padding: 16px 24px;
-        font-size: clamp(1rem, 0.8143rem + 0.7619vw, 1.5rem);
+        font-size: 24px;
         font-weight: 500;
-        line-height: clamp(2.125rem, 2.125rem + 0vw, 2.125rem);;
+        line-height: 34px;
         white-space: nowrap;
         background-color: transparent;
         border-radius: 16px;
@@ -157,7 +157,6 @@
     z-index: -999;
     padding-top: 56px;
 
-
     &.open {
       opacity: 1;
       visibility: visible;
@@ -193,6 +192,15 @@
 
     ul {
       margin-left: auto;
+    }
+
+    ul {
+      li {
+        a:not(.activeStatus) {
+          font-size: 16px;
+          line-height: 34px;
+        }
+      }
     }
 
     .menu {
