@@ -14,7 +14,7 @@ import Jvin from "../../assets/jvin.png";
 import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squidpay.png";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -59,6 +59,13 @@ const Home = () => {
   const [displayIndex, setDisplayIndex] = useState(0);
   const displayIndexRef = useRef(0);
   const processesLineRef = useRef(null);
+
+  useEffect(() => {
+    projects.forEach((project) => {
+      const img = new Image();
+      img.src = project.img;
+    });
+  }, []);
 
   // Hero process section animation
   useLayoutEffect(() => {
