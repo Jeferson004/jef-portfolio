@@ -1,9 +1,5 @@
 @use "../../styles/global.scss" as *;
 
-// .hero {
-//   padding-bottom: 0;
-// }
-
 .hero,
 .projects,
 .about,
@@ -11,16 +7,25 @@
   max-width: 1440px;
   margin-inline: auto;
   width: 100%;
+}
+
+.hero,
+.projects,
+.about,
+.beyond {
   padding-inline: 16px;
 }
 
-
+.projects,
 .about,
 .beyond {
-  padding-block: 154px;
+  padding-block: 96px;
 }
 
 .hero {
+  padding-top: 92px;
+  margin-top: 60px;
+
   .header_and_parag {
     text-align: center;
     max-width: 1016px;
@@ -113,7 +118,7 @@
     display: block;
     width: 100%;
     height: auto;
-    margin-left: -26.81%;
+    margin-left: clamp(-1.1875rem, 0.6232rem + -7.4286vw, -6.0625rem);
     // overflow: visible;
 
     text {
@@ -132,11 +137,12 @@
 
 .processes {
   .row {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 58px;
     padding-left: 16px;
-    border-left: 1px solid black;
+    // border-left: 1px solid black;
 
     .cols {
       display: flex;
@@ -156,6 +162,17 @@
       }
     }
   }
+
+  .processes_line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background-color: black;
+    transform: scaleY(var(--progress, 0));
+    transform-origin: top;
+  }
 }
 
 .projects {
@@ -174,6 +191,8 @@
 
       .sticky_card {
         .cols {
+          width: 100%;
+          
           .project_card_container {
             display: flex;
             align-items: center;
@@ -324,14 +343,6 @@
 }
 
 @media screen and (min-width: 768px) {
-  .hero,
-  .projects,
-  .marquee,
-  .about,
-  .beyond {
-    padding-inline: 124px;
-  }
-  
   // .circle_container {
   //   position: absolute;
   //   inset: 0;
@@ -416,7 +427,8 @@
     align-items: center;
     position: relative;
     z-index: 1;
-    padding-top: 261px;
+    padding-top: 165px;
+    margin-top: 104px;
 
     .container {
       max-width: 1440px;
@@ -425,18 +437,18 @@
       width: 100%;
     }
 
-    .header_and_parag {
-      h1 {
-        font-size: 72px;
-        line-height: 90px;
-        margin-bottom: 24px;
-      }
+    // .header_and_parag {
+    //   h1 {
+    //     font-size: 72px;
+    //     line-height: 90px;
+    //     margin-bottom: 24px;
+    //   }
 
-      h6 {
-        font-size: 24px;
-        line-height: 32px;
-      }
-    }
+    //   h6 {
+    //     font-size: 24px;
+    //     line-height: 32px;
+    //   }
+    // }
   }
 
   .about {
@@ -451,7 +463,7 @@
       display: flex;
       gap: 46px;
       margin: 0 auto;
-      align-items: center;
+      align-items: flex-start;
 
       // .indicator_wrapper {
       //   position: sticky;
@@ -512,7 +524,7 @@
 
   .beyond {
     position: relative;
-    margin-top: 80px;
+    // margin-top: 80px;
     padding-bottom: 105px;
     margin-inline: auto;
 
@@ -596,23 +608,72 @@
 }
 
 @media screen and (min-width: 992px) {
-  .socials_menu {
-    display: flex;
-    position: fixed;
-    left: 108px;
-    right: 0;
-    top: 50vh;
-    z-index: 999;
+  // .hero,
+  // .projects,
+  // .marquee,
+  // .about,
+  // .beyond {
+  //   padding-inline: 124px;
+  // }
+
+  .processes {
+    .row {
+      // border-left: unset;
+      padding-left: 0;
+
+      flex-direction: row;
+      // border-top: 1px solid black;
+      padding-top: 16px;
+    }
+
+    .processes_line {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      transform: scaleX(var(--progress, 0));
+      transform-origin: left;
+    }
+  }
+
+  .beyond {
+    padding-bottom: 60px;
+
+    .textCard {
+      h1 {
+        letter-spacing: -2%;
+        margin-bottom: 24px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1094px) {
+  .hero,
+  .projects,
+  .marquee,
+  .about,
+  .beyond {
+    padding-inline: 124px;
   }
 
   .processes {
     .row {
-      border-left: unset;
+      // border-left: unset;
       padding-left: 0;
 
       flex-direction: row;
-      border-top: 1px solid black;
+      // border-top: 1px solid black;
       padding-top: 16px;
+    }
+
+    .processes_line {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      transform: scaleX(var(--progress, 0));
+      transform-origin: left;
     }
   }
 
@@ -629,6 +690,15 @@
 }
 
 @media screen and (min-width: 1124px) {
+  .socials_menu {
+    display: flex;
+    position: fixed;
+    left: 32px;
+    right: 0;
+    top: 50vh;
+    z-index: 999;
+  }
+
   .outline_text_and_profile {
     display: flex;
     align-items: center;
@@ -647,8 +717,10 @@
       right: 48px; // distance from right of screen
       // remove: top: 50vh;
       // remove: transform: translateY(-50%);
-      width: 161.71450805664062px;
-      height: 161.71450805664062px;
+      // width: 161.71450805664062px;
+      // height: 161.71450805664062px;
+      height: 116px;
+      width: 116px;
       flex-shrink: 0;
       z-index: 999;
 
@@ -695,24 +767,17 @@
         left: 50%;
         transform: translate(-50%, -50%);
 
-        width: 108px;
-        height: 108px;
+        // width: 108px;
+        // height: 108px;
+
+        width: 72px;
+        height: 72px;
         border-radius: 50%;
 
         pointer-events: none;
       }
     }
   }
-}
-
-@media screen and (min-width: 1311px) {
-  // .hero,
-  // .projects,
-  // .marquee,
-  // .about,
-  // .beyond {
-  //   padding-inline: 124px;
-  // }
 }
 
 @media (max-width: 1480px) {

@@ -58,6 +58,7 @@ const Home = () => {
   const [activeProject, setActiveProject] = useState(0);
   const [displayIndex, setDisplayIndex] = useState(0);
   const displayIndexRef = useRef(0);
+  const processesLineRef = useRef(null);
 
   // Hero process section animation
   useLayoutEffect(() => {
@@ -66,16 +67,23 @@ const Home = () => {
         .toArray(`.${s.cols}`)
         .flatMap((col) => Array.from(col.children));
 
-      gsap.from(items, {
-        clipPath: "inset(0 0 100% 0)",
-        y: 40,
-        stagger: 0.15,
-        ease: "power2.out",
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: `.${s.processes}`,
           start: "top 65%",
           toggleActions: "play none none none",
         },
+      });
+
+      tl.fromTo(
+        processesLineRef.current,
+        { "--progress": 0 },
+        { "--progress": 1, duration: 0.6, ease: "power2.out" },
+      ).from(items, {
+        clipPath: "inset(0 0 100% 0)",
+        y: 40,
+        stagger: 0.15,
+        ease: "power2.out",
       });
     });
 
@@ -331,6 +339,7 @@ const Home = () => {
 
           <div className={s.processes}>
             <div className={s.row}>
+              <div className={s.processes_line} ref={processesLineRef}></div>
               <div className={s.cols}>
                 <p>01 Understand</p>
                 <p>
