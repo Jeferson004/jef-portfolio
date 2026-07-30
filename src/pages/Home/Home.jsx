@@ -65,7 +65,7 @@ const Home = () => {
       const img = new Image();
       img.src = project.img;
     });
-  }, []);
+  });
 
   // Hero process section animation
   useLayoutEffect(() => {

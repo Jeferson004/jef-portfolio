@@ -1,7 +1,12 @@
 import { useRef, useEffect } from "react";
 import s from "./Noise.module.scss";
 
-const Noise = ({ children, patternRefreshInterval = 2, patternAlpha = 15 }) => {
+const Noise = ({
+  children,
+  patternRefreshInterval = 2,
+  patternAlpha = 15,
+  grainSize = 2,
+}) => {
   const grainRef = useRef(null);
 
   useEffect(() => {
@@ -16,58 +21,86 @@ const Noise = ({ children, patternRefreshInterval = 2, patternAlpha = 15 }) => {
 
     const dpr = window.devicePixelRatio || 1;
 
+    // Offscreen canvas
+    const offscreen = document.createElement("canvas");
+    const offCtx = offscreen.getContext("2d");
+
     const resize = () => {
-      if (!canvas) return;
-      const w = Math.max(1, Math.floor(window.innerWidth * dpr));
-      const h = Math.max(1, Math.floor(window.innerHeight * dpr));
-      canvas.width = w;
-      canvas.height = h;
+      const width = Math.floor(window.innerWidth * dpr);
+      const height = Math.floor(window.innerHeight * dpr);
+
+      canvas.width = width;
+      canvas.height = height;
+
       canvas.style.width = "100vw";
       canvas.style.height = "100vh";
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
+
+      // Size of the small texture
+      offscreen.width = Math.ceil(width / grainSize);
+      offscreen.height = Math.ceil(height / grainSize);
     };
 
     const drawGrain = () => {
-      const width = canvas.width;
-      const height = canvas.height;
-      const imageData = ctx.createImageData(width, height);
+      const imageData = offCtx.createImageData(
+        offscreen.width,
+        offscreen.height
+      );
+
       const data = imageData.data;
 
       for (let i = 0; i < data.length; i += 4) {
-        const value = Math.floor(Math.random() * 255);
+        const value = (Math.random() * 255) | 0;
+
         data[i] = value;
         data[i + 1] = value;
         data[i + 2] = value;
-        data[i + 3] = patternAlpha; // 0-255
+        data[i + 3] = patternAlpha;
       }
 
-      ctx.putImageData(imageData, 0, 0);
+      offCtx.putImageData(imageData, 0, 0);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.imageSmoothingEnabled = false;
+
+      ctx.drawImage(
+        offscreen,
+        0,
+        0,
+        offscreen.width,
+        offscreen.height,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
     };
 
     const loop = () => {
       if (frame % patternRefreshInterval === 0) {
         drawGrain();
       }
+
       frame++;
-      animationId = window.requestAnimationFrame(loop);
+      animationId = requestAnimationFrame(loop);
     };
 
-    window.addEventListener("resize", resize);
     resize();
     loop();
 
+    window.addEventListener("resize", resize);
+
     return () => {
+      cancelAnimationFrame(animationId);
       window.removeEventListener("resize", resize);
-      window.cancelAnimationFrame(animationId);
     };
-  }, [patternRefreshInterval, patternAlpha]);
+  }, [patternRefreshInterval, patternAlpha, grainSize]);
 
   return (
     <>
       <div className={s.mesh_container}>
         <div className={s.mesh}></div>
       </div>
+
       <div className={s.wrapper}>
         <canvas ref={grainRef} className={s.noiseOverlay} />
         {children}

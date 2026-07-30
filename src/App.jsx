@@ -53,7 +53,7 @@ function App() {
     <>
       {isLoading && <Loader onComplete={() => setIsLoading(false)} />}
 
-      <Noise>
+      <Noise grainSize={2}>
         <ReactLenis
           root
           ref={lenisRef}

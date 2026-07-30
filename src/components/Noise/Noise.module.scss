@@ -2,7 +2,21 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  // overflow: clip;
+
+  &::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    background-image: radial-gradient(
+      rgba(210, 214, 219, 1) 3px,
+      transparent 1px
+    );
+    background-size: 64px 64px;
+    background-position: center;
+  }
 }
 
 .noiseOverlay {
