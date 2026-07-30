@@ -1,7 +1,7 @@
-// Loader.jsx
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import s from "./Loader.module.scss";
+import useScrollLock from "../../hooks/useScrollLock.js";
 
 const PHRASES = [
   "Hey, welcome.",
@@ -9,33 +9,26 @@ const PHRASES = [
   "Let's get started.",
 ];
 
-const lockScroll = () => {
-  document.documentElement.style.overflow = "hidden";
-  document.body.style.overflow = "hidden";
-  document.body.style.touchAction = "none";
-};
-
-const unlockScroll = () => {
-  document.documentElement.style.overflow = "";
-  document.body.style.overflow = "";
-  document.body.style.touchAction = "";
-};
-
-const Loader = ({ lenisRef }) => {
+const Loader = ({ onComplete }) => {
   const loaderRef = useRef(null);
   const percentRef = useRef(null);
   const textRefs = useRef([]);
   const counter = useRef({ value: 0 });
 
-  useEffect(() => {
-    lockScroll();
-    lenisRef?.current?.lenis?.stop();
+  const loadingTween = useRef(null);
+  const finishTween = useRef(null);
 
+  const [isLoading, setIsLoading] = useState(true);
+  useScrollLock(isLoading);
+
+  useEffect(() => {
     const loader = loaderRef.current;
     if (!loader) return;
 
     const preventTouch = (e) => e.preventDefault();
-    document.addEventListener("touchmove", preventTouch, { passive: false });
+    document.addEventListener("touchmove", preventTouch, {
+      passive: false,
+    });
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ paused: true });
@@ -71,35 +64,40 @@ const Loader = ({ lenisRef }) => {
         duration: 1.5,
         ease: "power4.inOut",
         onComplete: () => {
-          loader.style.display = "none";
           document.removeEventListener("touchmove", preventTouch);
-          unlockScroll();
-          lenisRef?.current?.lenis?.start();
+
+          setIsLoading(false); // unlocks scroll via the hook
+
+          requestAnimationFrame(() => {
+            onComplete?.();
+          });
         },
       });
 
-      gsap.to(counter.current, {
+      loadingTween.current = gsap.to(counter.current, {
         value: 99,
         duration: 20,
         ease: "none",
         onUpdate: () => {
-          percentRef.current.textContent = `${Math.round(
-            counter.current.value,
-          )}%`;
+          const percent = percentRef.current;
+          if (!percent) return;
+
+          percent.textContent = `${Math.round(counter.current.value)}%`;
         },
       });
 
       const handleLoad = () => {
-        gsap.killTweensOf(counter.current);
+        loadingTween.current?.kill();
 
-        gsap.to(counter.current, {
+        finishTween.current = gsap.to(counter.current, {
           value: 100,
           duration: 12,
           ease: "power2.out",
           onUpdate: () => {
-            percentRef.current.textContent = `${Math.round(
-              counter.current.value,
-            )}%`;
+            const percent = percentRef.current;
+            if (!percent) return;
+
+            percent.textContent = `${Math.round(counter.current.value)}%`;
           },
           onComplete: () => {
             tl.play();
@@ -110,22 +108,31 @@ const Loader = ({ lenisRef }) => {
       if (document.readyState === "complete") {
         handleLoad();
       } else {
-        window.addEventListener("load", handleLoad, { once: true });
+        window.addEventListener("load", handleLoad, {
+          once: true,
+        });
       }
 
       return () => {
-        window.removeEventListener("load", handleLoad);
+        window.addEventListener("load", handleLoad, {
+          once: true,
+        });
+
+        loadingTween.current?.kill();
+        finishTween.current?.kill();
+
+        tl.kill();
+
         gsap.killTweensOf(counter.current);
       };
     }, loaderRef);
 
     return () => {
       ctx.revert();
+
       document.removeEventListener("touchmove", preventTouch);
-      unlockScroll();
-      lenisRef?.current?.lenis?.start();
     };
-  }, [lenisRef]);
+  }, [onComplete]);
 
   return (
     <div ref={loaderRef} className={s.loader}>

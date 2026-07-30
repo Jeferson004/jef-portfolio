@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./Header.module.scss";
+import useScrollLock from "../../hooks/useScrollLock";
 
 // images
 import OpenMenu from "../../assets/open_menu.svg";
@@ -10,7 +11,8 @@ const Header = () => {
   const [isTop, setIsTop] = useState(true);
   const [hidden, setHidden] = useState(false);
   const lastScroll = useRef(0);
-  const prevOverflow = useRef("");
+
+  useScrollLock(menuOpen);
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -28,14 +30,11 @@ const Header = () => {
 
       setIsTop(currentScroll === 0);
 
-      // Ignore tiny scroll jitters
       if (Math.abs(currentScroll - lastScroll.current) < 5) return;
 
       if (currentScroll > lastScroll.current && currentScroll > 100) {
-        // scrolling down
         setHidden(true);
       } else {
-        // scrolling up
         setHidden(false);
       }
 
@@ -62,19 +61,6 @@ const Header = () => {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-    };
-  }, [menuOpen]);
-
-  useEffect(() => {
-    if (menuOpen) {
-      prevOverflow.current = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = prevOverflow.current;
-    }
-
-    return () => {
-      document.body.style.overflow = prevOverflow.current;
     };
   }, [menuOpen]);
 

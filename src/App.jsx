@@ -39,14 +39,19 @@ function App() {
 
   // Stop Lenis while the loader is mounted, resume once it's done
   useEffect(() => {
-    const lenis = lenisRef.current?.lenis;
-    if (!lenis) return;
+    const id = requestAnimationFrame(() => {
+      const lenis = lenisRef.current?.lenis;
 
-    if (isLoading) {
-      lenis.stop();
-    } else {
-      lenis.start();
-    }
+      if (!lenis) return;
+
+      if (isLoading) {
+        lenis.stop();
+      } else {
+        lenis.start();
+      }
+    });
+
+    return () => cancelAnimationFrame(id);
   }, [isLoading]);
 
   return (
@@ -62,15 +67,15 @@ function App() {
             duration: 3,
             smoothWheel: true,
           }}
-        />
+        >
+          <Header />
 
-        <Header />
+          <main>
+            <Home />
+          </main>
 
-        <main>
-          <Home />
-        </main>
-
-        <Footer />
+          <Footer />
+        </ReactLenis>
       </Noise>
     </>
   );
