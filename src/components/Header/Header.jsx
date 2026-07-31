@@ -9,7 +9,7 @@ import Logo from "../../assets/favicon.svg";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isTop, setIsTop] = useState(true);
+  // const [isTop, setIsTop] = useState(true);
   const [hidden, setHidden] = useState(false);
   const lastScroll = useRef(0);
 
@@ -19,7 +19,7 @@ const Header = () => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
 
-      setIsTop(currentScroll === 0);
+      // setIsTop(currentScroll === 0);
 
       if (Math.abs(currentScroll - lastScroll.current) < 5) return;
 
@@ -69,7 +69,6 @@ const Header = () => {
     <header
       className={`
     ${s.header}
-    ${isTop ? s.top : ""}
     ${hidden ? s.hidden : ""}
     ${menuOpen ? s.menu_open : ""}
   `}

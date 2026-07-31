@@ -8,12 +8,12 @@
   z-index: 9;
   transition: top 0.3s ease-in-out;
 
-  &.top {
-    .nav {
-      background-color: unset;
-      backdrop-filter: unset;
-    }
-  }
+  // &.top {
+  //   .nav {
+  //     background-color: unset;
+  //     backdrop-filter: unset;
+  //   }
+  // }
 
   &.hidden {
     top: -114px;
