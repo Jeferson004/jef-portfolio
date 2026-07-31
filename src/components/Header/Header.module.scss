@@ -18,6 +18,12 @@
   &.hidden {
     top: -114px;
   }
+
+  &.menu_open {
+    .nav {
+      backdrop-filter: unset;
+    }
+  }
 }
 
 .nav {
@@ -27,9 +33,10 @@
   justify-content: space-between;
   width: 100%;
   padding: 12px 24px;
-  // background: rgba(255, 100, 147, 0.08);
   backdrop-filter: blur(10px);
-  transition: background-color 0.3s ease-in-out;
+  // transition:
+  //   backdrop-filter 0.3s ease-in-out,
+  //   background-color 0.3s ease-in-out;
 }
 
 .logo {
@@ -141,8 +148,8 @@
     transition:
       opacity 0.3s ease-in-out,
       visibility 0.3s ease-in-out;
-    z-index: -999;
     padding-top: 116px;
+    z-index: -999;
 
     &.open {
       opacity: 1;

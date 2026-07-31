@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./Header.module.scss";
-import useScrollLock from "../../hooks/useScrollLock";
+// import useScrollLock from "../../hooks/useScrollLock";
 
 // images
 import OpenMenu from "../../assets/open_menu.svg";
@@ -13,7 +13,7 @@ const Header = () => {
   const [hidden, setHidden] = useState(false);
   const lastScroll = useRef(0);
 
-  useScrollLock(menuOpen);
+  // useScrollLock(menuOpen);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,10 +68,11 @@ const Header = () => {
   return (
     <header
       className={`
-        ${s.header}
-        ${isTop ? s.top : ""}
-        ${hidden ? s.hidden : ""}
-      `}
+    ${s.header}
+    ${isTop ? s.top : ""}
+    ${hidden ? s.hidden : ""}
+    ${menuOpen ? s.menu_open : ""}
+  `}
     >
       <nav className={s.nav}>
         <a href="#hero" className={s.logo}>
