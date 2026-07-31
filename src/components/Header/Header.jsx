@@ -5,6 +5,7 @@ import useScrollLock from "../../hooks/useScrollLock";
 // images
 import OpenMenu from "../../assets/open_menu.svg";
 import CloseMenu from "../../assets/close_menu.svg";
+import Logo from "../../assets/favicon.svg";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -13,16 +14,6 @@ const Header = () => {
   const lastScroll = useRef(0);
 
   useScrollLock(menuOpen);
-
-  const toggleMenu = () => {
-    setMenuOpen((prev) => !prev);
-  };
-
-  const handleLinkClick = () => {
-    if (window.innerWidth < 992) {
-      setMenuOpen(false);
-    }
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,6 +55,16 @@ const Header = () => {
     };
   }, [menuOpen]);
 
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
+  const handleLinkClick = () => {
+    if (window.innerWidth < 992) {
+      setMenuOpen(false);
+    }
+  };
+
   return (
     <header
       className={`
@@ -74,7 +75,7 @@ const Header = () => {
     >
       <nav className={s.nav}>
         <a href="#hero" className={s.logo}>
-          JEF.
+          <img src={Logo} alt="" />
         </a>
 
         <div className={s.menu_icon} onClick={toggleMenu}>
@@ -88,28 +89,25 @@ const Header = () => {
           <ul className={s.menu}>
             <li>
               <a href="#projects" onClick={handleLinkClick}>
-                Projects
+                PROJECTS
               </a>
             </li>
-
             <li>
               <a href="#about" onClick={handleLinkClick}>
-                About
-              </a>
-            </li>
-
-            <li>
-              <a href="#beyond" onClick={handleLinkClick}>
-                Beyond the code
+                ABOUT US
               </a>
             </li>
           </ul>
 
-          <ul>
+          <ul className={s.menu}>
             <li>
-              <a href="#" className={s.activeStatus}>
-                <span className={s.activeIcon}></span>
-                Open to Work
+              <a href="#beyond" onClick={handleLinkClick}>
+                BEYOND THE CODE
+              </a>
+            </li>
+            <li>
+              <a href="#reachout" onClick={handleLinkClick}>
+                REACH OUT
               </a>
             </li>
           </ul>
