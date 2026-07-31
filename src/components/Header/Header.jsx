@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./Header.module.scss";
-// import useScrollLock from "../../hooks/useScrollLock";
+import useScrollLock from "../../hooks/useScrollLock";
 
 // images
 import OpenMenu from "../../assets/open_menu.svg";
@@ -13,7 +13,7 @@ const Header = () => {
   const [hidden, setHidden] = useState(false);
   const lastScroll = useRef(0);
 
-  // useScrollLock(menuOpen);
+  useScrollLock(menuOpen);
 
   useEffect(() => {
     const handleScroll = () => {
