@@ -49,46 +49,53 @@
       width: 100%;
       margin-inline: auto;
 
-      margin-bottom: 48px;
+      margin-bottom: 128px;
     }
   }
 }
 
-.scroll_icon {
-  position: relative;
-  display: block;
-  width: 33px;
-  height: 44px;
-  margin: 0 auto 24px;
+.scroll_icon_and_text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 4px;
 
-  border: 2px solid black;
-  border-radius: 28px;
-  animation: upanddown 1.5s ease-in-out infinite;
-}
-
-.scroll_icon_line {
-  position: absolute;
-  width: 2px;
-  height: 12px;
-
-  background-color: black;
-
-  left: 50%;
-  bottom: 6px;
-
-  transform: translateX(-50%);
-}
-
-@keyframes upanddown {
-  0%,
-  100% {
-    transform: translateY(0);
+  .scroll_icon {
+    // position: relative;
+    // display: block;
+    // width: 33px;
+    // height: 44px;
+  
+    // border: 2px solid black;
+    // border-radius: 28px;
+    animation: upanddown 1.5s ease-in-out infinite;
   }
-
-  50% {
-    transform: translateY(8px);
+  
+  // .scroll_icon_line {
+  //   position: absolute;
+  //   width: 2px;
+  //   height: 12px;
+  
+  //   background-color: black;
+  
+  //   left: 50%;
+  //   bottom: 6px;
+  
+  //   transform: translateX(-50%);
+  // }
+  
+  @keyframes upanddown {
+    0%,
+    100% {
+      transform: translateY(-6px);
+    }
+  
+    50% {
+      transform: translateY(6px);
+    }
   }
 }
+
 
 .socials_menu {
   display: none;
@@ -136,6 +143,7 @@
 }
 
 .processes {
+  margin-top: 164px;
   .row {
     position: relative;
     display: flex;
@@ -192,7 +200,7 @@
       .sticky_card {
         .cols {
           width: 100%;
-          
+
           .project_card_container {
             display: flex;
             align-items: center;
@@ -343,8 +351,6 @@
 }
 
 @media screen and (min-width: 768px) {
-
-
   // .circle_container {
   //   position: absolute;
   //   inset: 0;
@@ -429,7 +435,7 @@
     align-items: center;
     position: relative;
     z-index: 1;
-    padding-top: 165px;
+    padding-top: 64px;
     margin-top: 104px;
 
     .container {
@@ -530,7 +536,6 @@
 
   .beyond {
     position: relative;
-    // margin-top: 80px;
     padding-bottom: 105px;
     margin-inline: auto;
 
@@ -606,7 +611,6 @@
       top: 49.89%;
       left: 50%;
       transform: translate(-50%, -50%);
-
       width: 56.11%;
       z-index: 6;
     }
@@ -614,21 +618,10 @@
 }
 
 @media screen and (min-width: 992px) {
-  // .hero,
-  // .projects,
-  // .marquee,
-  // .about,
-  // .beyond {
-  //   padding-inline: 124px;
-  // }
-
   .processes {
     .row {
-      // border-left: unset;
       padding-left: 0;
-
       flex-direction: row;
-      // border-top: 1px solid black;
       padding-top: 16px;
     }
 
@@ -665,11 +658,8 @@
 
   .processes {
     .row {
-      // border-left: unset;
       padding-left: 0;
-
       flex-direction: row;
-      // border-top: 1px solid black;
       padding-top: 16px;
     }
 
@@ -701,14 +691,14 @@
     position: fixed;
     left: 32px;
     right: 0;
-    top: 50vh;
+    top: 65vh;
     z-index: 999;
   }
 
   .outline_text_and_profile {
     display: flex;
     align-items: center;
-    margin-left: -8.7%; // was: transform: translateX(-8.7%);
+    margin-left: -8.7%;
     justify-content: space-between;
     gap: 66.64px;
 
@@ -719,8 +709,8 @@
     .circle_wrapper {
       display: flex;
       position: fixed;
-      bottom: 48px; // distance from bottom of screen
-      right: 48px; // distance from right of screen
+      bottom: 48px;
+      right: 48px;
       // remove: top: 50vh;
       // remove: transform: translateY(-50%);
       // width: 161.71450805664062px;
@@ -772,14 +762,9 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-
-        // width: 108px;
-        // height: 108px;
-
         width: 72px;
         height: 72px;
         border-radius: 50%;
-
         pointer-events: none;
       }
     }

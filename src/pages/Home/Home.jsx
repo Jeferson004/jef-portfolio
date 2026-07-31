@@ -9,10 +9,12 @@ import ScrollIndicator from "../../components/ScrollIndicator/ScrollIndicator.js
 import linkedinIcon from "../../assets/linkedin_icon.svg";
 import githubIcon from "../../assets/github_icon.svg";
 import gmailIcon from "../../assets/gmail_icon.svg";
-import Avatar from "../../assets/avatar.png";
+// import Avatar from "../../assets/avatar.png";
 import Jvin from "../../assets/jvin.png";
 import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squidpay.png";
+import mouse from "../../assets/mouse_icon.svg";
+
 
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
@@ -28,6 +30,7 @@ const Home = () => {
       chip: "Client Project",
       title: "Product Designer Portfolio",
       desc: "Part-time freelance front-end development for a live client portfolio site",
+      href: "#Jvin",
     },
     {
       img: Banwa,
@@ -35,6 +38,7 @@ const Home = () => {
       chip: "Backend Development",
       title: "BANWA: Backend & API Architecture",
       desc: "API development, hosting, and access control for a local government service platform",
+      href: "#Banwa",
     },
     {
       img: SquidPay,
@@ -42,6 +46,7 @@ const Home = () => {
       chip: "Personal Project",
       title: "Fintech Landing Page (Concept Build)",
       desc: "Self-initiated front-end project replicating a payments platform landing page",
+      href: "#Squidpay",
     },
   ];
 
@@ -53,8 +58,8 @@ const Home = () => {
   const aboutTextRef = useRef(null);
   const beyondTitleRef = useRef(null);
   const beyondTextRef = useRef(null);
-  const outlineSvgRef = useRef(null);
-  const outlineTextRef = useRef(null);
+  // const outlineSvgRef = useRef(null);
+  // const outlineTextRef = useRef(null);
   const [activeProject, setActiveProject] = useState(0);
   const [displayIndex, setDisplayIndex] = useState(0);
   const displayIndexRef = useRef(0);
@@ -67,7 +72,7 @@ const Home = () => {
     });
   });
 
-  // Hero process section animation
+  // ==================== HERO SECTION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const items = gsap.utils
@@ -98,55 +103,56 @@ const Home = () => {
   }, []);
 
   // new effect — runs once, animates dashoffset from full length to 0
-  useLayoutEffect(() => {
-    const svg = outlineSvgRef.current;
-    const text = outlineTextRef.current;
-    if (!svg || !text) return;
+  // useLayoutEffect(() => {
+  //   const svg = outlineSvgRef.current;
+  //   const text = outlineTextRef.current;
+  //   if (!svg || !text) return;
 
-    let hasAnimated = false;
+  //   let hasAnimated = false;
 
-    const updateViewBox = () => {
-      const bbox = text.getBBox();
-      const pad = 4;
-      svg.setAttribute(
-        "viewBox",
-        `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`,
-      );
+  //   const updateViewBox = () => {
+  //     const bbox = text.getBBox();
+  //     const pad = 4;
+  //     svg.setAttribute(
+  //       "viewBox",
+  //       `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`,
+  //     );
 
-      const length = text.getComputedTextLength() * 1.6;
-      gsap.set(text, {
-        strokeDasharray: length,
-        strokeDashoffset: hasAnimated ? 0 : length,
-      });
-    };
+  //     const length = text.getComputedTextLength() * 1.6;
+  //     gsap.set(text, {
+  //       strokeDasharray: length,
+  //       strokeDashoffset: hasAnimated ? 0 : length,
+  //     });
+  //   };
 
-    updateViewBox();
+  //   updateViewBox();
 
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: svg,
-        start: "top 65%",
-        once: true,
-        onEnter: () => {
-          hasAnimated = true;
-          gsap.to(text, {
-            strokeDashoffset: 0,
-            duration: 2,
-            ease: "power2.inOut",
-          });
-        },
-      });
-    });
+  //   const ctx = gsap.context(() => {
+  //     ScrollTrigger.create({
+  //       trigger: svg,
+  //       start: "top 65%",
+  //       once: true,
+  //       onEnter: () => {
+  //         hasAnimated = true;
+  //         gsap.to(text, {
+  //           strokeDashoffset: 0,
+  //           duration: 2,
+  //           ease: "power2.inOut",
+  //         });
+  //       },
+  //     });
+  //   });
 
-    const resizeObserver = new ResizeObserver(() => updateViewBox());
-    resizeObserver.observe(svg.parentElement);
+  //   const resizeObserver = new ResizeObserver(() => updateViewBox());
+  //   resizeObserver.observe(svg.parentElement);
 
-    return () => {
-      ctx.revert();
-      resizeObserver.disconnect();
-    };
-  }, []);
+  //   return () => {
+  //     ctx.revert();
+  //     resizeObserver.disconnect();
+  //   };
+  // }, []);
 
+  // ==================== PROJECTS SECTION ====================
   // Swaps the visible project content, with a fade-out -> swap -> fade-in.
   const changeDisplayedProject = (index) => {
     if (displayIndexRef.current === index) return;
@@ -229,7 +235,7 @@ const Home = () => {
 
   const current = projects[displayIndex];
 
-  // About section animation
+  // ==================== ABOUT SECTION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from([aboutTitleRef.current, aboutTextRef.current], {
@@ -248,6 +254,7 @@ const Home = () => {
     return () => ctx.revert();
   }, []);
 
+  // ==================== BEYOND SECTION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from([beyondTitleRef.current, beyondTextRef.current], {
@@ -295,8 +302,15 @@ const Home = () => {
             </h6>
           </div>
 
-          <div className={s.scroll_icon}>
-            <div className={s.scroll_icon_line}></div>
+          <div className={s.scroll_icon_and_text}>
+            {/* <div className={s.scroll_icon}>
+              <div className={s.scroll_icon_line}></div>
+            </div> */}
+
+            <div className={s.scroll_icon}>
+              <img src={mouse} alt="" />
+            </div>
+            <p>SCROLL DOWN</p>
           </div>
 
           <div className={s.socials_menu}>
@@ -311,7 +325,7 @@ const Home = () => {
             </a>
           </div>
 
-          <div className={s.outline_text_and_profile}>
+          {/* <div className={s.outline_text_and_profile}>
             <svg className={s.outline_text} ref={outlineSvgRef}>
               <text ref={outlineTextRef} x="0" y="0.8em">
                 LET'S BUILD
@@ -342,7 +356,7 @@ const Home = () => {
 
               <img className={s.circle_avatar} src={Avatar} alt="" />
             </div>
-          </div>
+          </div> */}
 
           <div className={s.processes}>
             <div className={s.row}>
@@ -398,7 +412,7 @@ const Home = () => {
             {/* Sticky visual: stays on screen, content swaps via GSAP */}
             <div className={s.sticky_card}>
               <a
-                href="#"
+                href={current.href}
                 className={`${s.cols} ${s.project_card}`}
                 ref={cardContentRef}
               >
