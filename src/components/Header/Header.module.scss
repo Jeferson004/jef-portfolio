@@ -46,13 +46,13 @@
 
   ul {
     padding-inline: 1rem; // 16px
-    // width: 100%;
+    width: 100%;
 
     li {
-      margin-left: auto;
-
+      margin-inline: auto;
+      
       a {
-        text-align: right;
+        text-align: center;
         padding: 1rem 1.5rem; // 16px 24px
         font-size: 0.75rem; // 12px
         font-weight: 500;
@@ -137,6 +137,7 @@
         column-gap: 1.5rem; // 24px
         flex-direction: row;
         padding: 0;
+        width: max-content;
       }
     }
   }

@@ -54,8 +54,8 @@
 .text {
   position: absolute;
 
-  font-size: 60px;
-  line-height: 72px;
+  font-size: clamp(1.875rem, 1.1786rem + 2.8571vw, 3.75rem);
+  line-height: clamp(2.375rem, 1.5857rem + 3.2381vw, 4.5rem);
   font-weight: 700;
   color: #111;
 
