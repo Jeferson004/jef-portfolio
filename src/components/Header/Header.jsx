@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./Header.module.scss";
 import useScrollLock from "../../hooks/useScrollLock";
+import { useLenis } from "lenis/react";
 
 // images
 import OpenMenu from "../../assets/open_menu.svg";
@@ -9,17 +10,25 @@ import Logo from "../../assets/favicon.svg";
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  // const [isTop, setIsTop] = useState(true);
   const [hidden, setHidden] = useState(false);
   const lastScroll = useRef(0);
+  const lenis = useLenis();
 
   useScrollLock(menuOpen);
+
+  useEffect(()=> {
+    if(!lenis) return;
+
+    if(menuOpen) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  }, [menuOpen, lenis]);
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
-
-      // setIsTop(currentScroll === 0);
 
       if (Math.abs(currentScroll - lastScroll.current) < 5) return;
 
@@ -94,7 +103,7 @@ const Header = () => {
             </li>
             <li>
               <a href="#about" onClick={handleLinkClick}>
-                ABOUT US
+                ABOUT
               </a>
             </li>
           </ul>

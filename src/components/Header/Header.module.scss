@@ -8,19 +8,14 @@
   z-index: 9;
   transition: top 0.3s ease-in-out;
 
-  // &.top {
-  //   .nav {
-  //     background-color: unset;
-  //     backdrop-filter: unset;
-  //   }
-  // }
-
   &.hidden {
-    top: -75px;
+    top: -4.6875rem; // -75px
   }
 
   &.menu_open {
     transform: translateY(0);
+    top: 0 !important;
+
     .nav {
       backdrop-filter: unset;
     }
@@ -33,11 +28,8 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 12px 24px;
-  backdrop-filter: blur(10px);
-  // transition:
-  //   backdrop-filter 0.3s ease-in-out,
-  //   background-color 0.3s ease-in-out;
+  padding: 0.75rem 1.5rem; // 12px 24px
+  backdrop-filter: blur(0.625rem); // 10px
 }
 
 .logo {
@@ -53,20 +45,25 @@
   display: none;
 
   ul {
-    padding-inline: 16px;
+    padding-inline: 1rem; // 16px
+    // width: 100%;
 
     li {
-      a:not(.activeStatus) {
-        padding: 16px 24px;
-        font-size: 12px;
+      margin-left: auto;
+
+      a {
+        text-align: right;
+        padding: 1rem 1.5rem; // 16px 24px
+        font-size: 0.75rem; // 12px
         font-weight: 500;
-        line-height: 18px;
+        line-height: 1.125rem; // 18px
         letter-spacing: 24%;
-        word-spacing: 12px;
+        word-spacing: 0.75rem; // 12px
         white-space: nowrap;
         background-color: transparent;
-        border-radius: 16px;
+        border-radius: 1rem; // 16px
         transition: background-color 200ms ease-out;
+        width: max-content;
 
         &:hover {
           background-color: rgba(255, 255, 255, 1);
@@ -77,91 +74,41 @@
 
   .menu {
     display: flex;
-    column-gap: 24px;
+    column-gap: 1.5rem; // 24px
   }
 }
 
-// .activeStatus {
-//   @include nav-links;
-//   display: flex;
-//   align-items: center;
-//   gap: 8px;
-//   padding: 12px 24px;
-//   border-radius: 999px;
-//   background: #fff;
-//   white-space: nowrap;
-// }
-
-// .activeIcon {
-//   width: 16px;
-//   height: 16px;
-//   border-radius: 50%;
-//   background: #20da083d;
-//   position: relative;
-
-//   &::before,
-//   &::after {
-//     content: "";
-//     position: absolute;
-//     inset: 3px;
-//     border-radius: 50%;
-//     background: #04dd6d;
-//   }
-
-//   &::after {
-//     z-index: 2; // solid center dot, stays still
-//   }
-
-//   &::before {
-//     z-index: 1;
-//     animation: ripple 2.4s ease-out infinite;
-//   }
-// }
-
-// @keyframes ripple {
-//   0% {
-//     transform: scale(1);
-//     opacity: 0.5;
-//   }
-//   100% {
-//     transform: scale(2.6);
-//     opacity: 0;
-//   }
-// }
-
-// Mobile: nav shows only logo + menu icon.
-// Menu links live in a fullscreen overlay, stacked as two groups.
 @media screen and (max-width: 991px) {
   .menu_container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 32px;
-    backdrop-filter: blur(10px);
+    gap: 2rem; // 32px
+    backdrop-filter: blur(0.625rem); // 10px
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
     transition:
       opacity 0.3s ease-in-out,
       visibility 0.3s ease-in-out;
-    padding-top: 116px;
+    padding-top: 7.25rem; // 116px
     z-index: -999;
 
     &.open {
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(0.625rem); // 10px
     }
 
     .menu {
       flex-direction: column;
-      row-gap: 24px;
+      row-gap: 1.5rem; // 24px
       text-align: center;
     }
   }
@@ -187,14 +134,9 @@
 
       .menu {
         display: flex;
-        column-gap: 24px;
+        column-gap: 1.5rem; // 24px
         flex-direction: row;
         padding: 0;
-
-        // a:not(.activeStatus) {
-        //   font-size: 16px;
-        //   line-height: 34px;
-        // }
       }
     }
   }

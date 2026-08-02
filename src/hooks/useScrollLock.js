@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 // module-level, shared by every component using the hook
 let lockCount = 0;
-// let savedScrollY = 0;
+// let savedScrollY = 0; 
 
 const lockScroll = () => {
   if (lockCount === 0) {
