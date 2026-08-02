@@ -14,11 +14,10 @@ const Loader = ({ onComplete }) => {
   const percentRef = useRef(null);
   const textRefs = useRef([]);
   const counter = useRef({ value: 0 });
-
   const loadingTween = useRef(null);
   const finishTween = useRef(null);
-
   const [isLoading, setIsLoading] = useState(true);
+  
   useScrollLock(isLoading);
 
   useEffect(() => {
@@ -66,7 +65,7 @@ const Loader = ({ onComplete }) => {
         onComplete: () => {
           document.removeEventListener("touchmove", preventTouch);
 
-          setIsLoading(false); // unlocks scroll via the hook
+          setIsLoading(false);
 
           requestAnimationFrame(() => {
             onComplete?.();
@@ -76,7 +75,7 @@ const Loader = ({ onComplete }) => {
 
       loadingTween.current = gsap.to(counter.current, {
         value: 99,
-        duration: 20,
+        duration: 8,
         ease: "none",
         onUpdate: () => {
           const percent = percentRef.current;
@@ -91,7 +90,7 @@ const Loader = ({ onComplete }) => {
 
         finishTween.current = gsap.to(counter.current, {
           value: 100,
-          duration: 12,
+          duration: 4,
           ease: "power2.out",
           onUpdate: () => {
             const percent = percentRef.current;

@@ -4,28 +4,20 @@
 
 @media screen and (min-width: 768px) {
   .indicator {
-    // position: sticky;
-    // top: 103.922px;
-    // align-self: flex-start;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 16px;
-
     height: fit-content;
   }
 
   .dot {
     position: relative;
-
     width: 12px;
     height: 12px;
-
     border: 1px solid black;
     border-radius: 50%;
     background: transparent;
-
     transition: all 0.3s ease;
   }
 
