@@ -15,7 +15,6 @@ import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squidpay.png";
 import mouse from "../../assets/mouse_icon.svg";
 
-
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -58,19 +57,10 @@ const Home = () => {
   const aboutTextRef = useRef(null);
   const beyondTitleRef = useRef(null);
   const beyondTextRef = useRef(null);
-  // const outlineSvgRef = useRef(null);
-  // const outlineTextRef = useRef(null);
   const [activeProject, setActiveProject] = useState(0);
   const [displayIndex, setDisplayIndex] = useState(0);
   const displayIndexRef = useRef(0);
   const processesLineRef = useRef(null);
-
-  useEffect(() => {
-    projects.forEach((project) => {
-      const img = new Image();
-      img.src = project.img;
-    });
-  });
 
   // ==================== HERO SECTION ====================
   useLayoutEffect(() => {
@@ -102,57 +92,14 @@ const Home = () => {
     return () => ctx.revert();
   }, []);
 
-  // new effect — runs once, animates dashoffset from full length to 0
-  // useLayoutEffect(() => {
-  //   const svg = outlineSvgRef.current;
-  //   const text = outlineTextRef.current;
-  //   if (!svg || !text) return;
-
-  //   let hasAnimated = false;
-
-  //   const updateViewBox = () => {
-  //     const bbox = text.getBBox();
-  //     const pad = 4;
-  //     svg.setAttribute(
-  //       "viewBox",
-  //       `${bbox.x - pad} ${bbox.y - pad} ${bbox.width + pad * 2} ${bbox.height + pad * 2}`,
-  //     );
-
-  //     const length = text.getComputedTextLength() * 1.6;
-  //     gsap.set(text, {
-  //       strokeDasharray: length,
-  //       strokeDashoffset: hasAnimated ? 0 : length,
-  //     });
-  //   };
-
-  //   updateViewBox();
-
-  //   const ctx = gsap.context(() => {
-  //     ScrollTrigger.create({
-  //       trigger: svg,
-  //       start: "top 65%",
-  //       once: true,
-  //       onEnter: () => {
-  //         hasAnimated = true;
-  //         gsap.to(text, {
-  //           strokeDashoffset: 0,
-  //           duration: 2,
-  //           ease: "power2.inOut",
-  //         });
-  //       },
-  //     });
-  //   });
-
-  //   const resizeObserver = new ResizeObserver(() => updateViewBox());
-  //   resizeObserver.observe(svg.parentElement);
-
-  //   return () => {
-  //     ctx.revert();
-  //     resizeObserver.disconnect();
-  //   };
-  // }, []);
-
   // ==================== PROJECTS SECTION ====================
+  useEffect(() => {
+    projects.forEach((project) => {
+      const img = new Image();
+      img.src = project.img;
+    });
+  });
+
   // Swaps the visible project content, with a fade-out -> swap -> fade-in.
   const changeDisplayedProject = (index) => {
     if (displayIndexRef.current === index) return;
@@ -291,10 +238,18 @@ const Home = () => {
         </div>
       </div> */}
 
-      {/* Hero Section */}
+      {/* ==================== Hero Section ==================== */}
       <section className={s.hero} id="hero">
         <div className={s.container}>
           <div className={s.header_and_parag}>
+            <a
+              href="#"
+              className={`${s.activeStatus} ${s.activeStatus_mobile}`}
+            >
+              <span className={s.activeIcon}></span>
+              Open to Work
+            </a>
+
             <h1>Curious enough to learn. Driven enough to build.</h1>
             <h6>
               Front-end developer fueled by coffee and a stubborn desire to make
@@ -302,26 +257,32 @@ const Home = () => {
             </h6>
           </div>
 
-          <div className={s.scroll_icon_and_text}>
-            {/* <div className={s.scroll_icon}>
-              <div className={s.scroll_icon_line}></div>
-            </div> */}
-
-            <div className={s.scroll_icon}>
-              <img src={mouse} alt="" />
+          <div className={s.scroll_down_and_active_status}>
+            <div className={s.socials_menu}>
+              <a href="#linkedin" className={s.links}>
+                <img src={linkedinIcon} alt="LinkedIn" loading="lazy" />
+              </a>
+              <a href="#github" className={s.links}>
+                <img src={githubIcon} alt="GitHub" loading="lazy" />
+              </a>
+              <a href="#gmail" className={s.links}>
+                <img src={gmailIcon} alt="Gmail" loading="lazy" />
+              </a>
             </div>
-            <p>SCROLL DOWN</p>
-          </div>
 
-          <div className={s.socials_menu}>
-            <a href="#linkedin" className={s.links}>
-              <img src={linkedinIcon} alt="LinkedIn" />
-            </a>
-            <a href="#github" className={s.links}>
-              <img src={githubIcon} alt="GitHub" />
-            </a>
-            <a href="#gmail" className={s.links}>
-              <img src={gmailIcon} alt="Gmail" />
+            <div className={s.scroll_icon_and_text}>
+              <div className={s.scroll_icon}>
+                <img src={mouse} alt="" loading="lazy" />
+              </div>
+              <p>SCROLL DOWN</p>
+            </div>
+
+            <a
+              href="#"
+              className={`${s.activeStatus} ${s.activeStatus_desktop}`}
+            >
+              <span className={s.activeIcon}></span>
+              Open to Work
             </a>
           </div>
 
@@ -391,7 +352,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Projects Section */}
+      {/* ==================== Projects Section ==================== */}
       <section className={s.projects} id="projects" ref={projectsRef}>
         <div className={s.outer_row}>
           <div className={s.indicator_wrapper}>
@@ -402,14 +363,12 @@ const Home = () => {
             className={s.inner_row}
             style={{ height: `${projects.length * 100}vh` }}
           >
-            {/* Invisible scroll track: drives scroll length + trigger points only */}
             <div className={s.scroll_track}>
               {projects.map((p) => (
                 <div className={s.project_scene} key={p.title} />
               ))}
             </div>
 
-            {/* Sticky visual: stays on screen, content swaps via GSAP */}
             <div className={s.sticky_card}>
               <a
                 href={current.href}
@@ -418,7 +377,7 @@ const Home = () => {
               >
                 <div className={s.project_card_container}>
                   <div className={s.project_image}>
-                    <img src={current.img} alt={current.alt} />
+                    <img src={current.img} alt={current.alt} loading="lazy" />
                   </div>
                   <div className={s.chip_and_texts}>
                     <div className={s.chips}>{current.chip}</div>
@@ -432,10 +391,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Marquee Section */}
+      {/* ==================== Marquee Section ==================== */}
       <Marquee />
 
-      {/* About me Section */}
+      {/* ==================== About me Section ==================== */}
       <section className={s.about} id="about">
         <div className={s.header_and_parag} ref={aboutRef}>
           <h1 ref={aboutTitleRef}>About</h1>
@@ -455,7 +414,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Beyond the code Section */}
+      {/* ==================== Beyond the code Section ==================== */}
       <section className={s.beyond} id="beyond">
         <div className={s.textCard} ref={beyondRef}>
           <h1 ref={beyondTitleRef}>Beyond the code</h1>
@@ -473,11 +432,6 @@ const Home = () => {
           <div className={`${s.card} ${s.card1}`} aria-hidden="true" />
         </div>
       </section>
-
-      {/* The End Section */}
-      {/* <section className={s.the_end} id="beyond">
-        <h1>THE END</h1>
-      </section> */}
     </>
   );
 };
