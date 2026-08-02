@@ -131,7 +131,7 @@
   white-space: nowrap;
   width: max-content;
   z-index: 999;
-
+  outline: 1px solid rgba(0, 0, 0, 0.1);
   font-size: clamp(0.875rem, 0.8286rem + 0.1905vw, 1rem);
   font-weight: 400;
   line-height: clamp(1.25rem, 1.1571rem + 0.381vw, 1.5rem);
