@@ -121,30 +121,35 @@
       display: block;
       width: 16px;
       height: 24px;
-      border: 2px solid black;
-      border-radius: 28px;
-      margin-inline: 4px;
 
-      .scroll_icon_line_1 {
-        animation: upanddown1 1.5s ease-in-out infinite;
+      img {
         position: absolute;
-        height: 6px;
-        border: 1px solid black;
-        border-radius: 28px;
+        left: 0;
+        top: 0;
+      }
+
+      img:first-child {
+        width: 100%;
+        height: 100%;
+      }
+
+      img:last-child {
+        animation: upanddown1 1.5s ease-in-out infinite;
         left: 50%;
-        top: 6px;
+        top: 8px;
+        transform: translateX(-50%);
       }
+    }
+  }
 
-      @keyframes upanddown1 {
-        0%,
-        100% {
-          transform: translateX(-50%) translateY(-3px);
-        }
+  @keyframes upanddown1 {
+    0%,
+    100% {
+      transform: translateX(-50%) translateY(-2px);
+    }
 
-        50% {
-          transform: translateX(-50%) translateY(0px);
-        }
-      }
+    50% {
+      transform: translateX(-50%) translateY(0px);
     }
   }
 

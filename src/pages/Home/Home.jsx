@@ -15,6 +15,9 @@ import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squidpay.png";
 import mouse from "../../assets/mouse_icon.svg";
 
+import mouseShape from "../../assets/mouse.svg";
+import mouseScroller from "../../assets/mouse_scroller.svg";
+
 import { useLayoutEffect, useRef, useState, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -279,7 +282,8 @@ const Home = () => {
 
             <div className={s.scroll_icon_and_text_1}>
               <div className={s.scroll_icon_1}>
-                <div className={s.scroll_icon_line_1}></div>
+                <img src={mouseShape} alt="" loading="lazy" />
+                <img src={mouseScroller} alt="" loading="lazy" />
               </div>
               <p>SCROLL DOWN</p>
             </div>
