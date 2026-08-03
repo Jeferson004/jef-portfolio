@@ -37,6 +37,7 @@
     .activeStatus_mobile {
       display: flex;
       margin: 0 auto 24px;
+      padding: 8px 16px;
     }
 
     h1 {
@@ -179,8 +180,7 @@
 .activeStatus {
   align-items: center;
   gap: 8px;
-  padding: 12px 24px;
-  border-radius: 999px;
+  border-radius: 12px;
   background: #fff;
   white-space: nowrap;
   width: max-content;
@@ -511,6 +511,7 @@
 
   .scroll_down_and_active_status {
     .activeStatus_desktop {
+      padding: 12px 24px;
       display: flex;
     }
   }
