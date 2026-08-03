@@ -1,52 +1,55 @@
 // Loader.module.scss
+
 .loader {
   position: fixed;
   inset: 0;
   z-index: 10;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  background: rgba(251, 252, 255, 1);
   overflow: hidden;
+  background: rgba(251, 252, 255, 1);
 
   pointer-events: all;
 
   &::before {
     content: "";
+
     position: fixed;
     inset: 0;
-    pointer-events: none;
     z-index: -1;
+
+    pointer-events: none;
 
     background-image: radial-gradient(
       rgba(210, 214, 219, 1) 1.5px,
       transparent 1px
     );
-    background-size: 64px 64px;
     background-position: center;
+    background-size: 64px 64px;
   }
 }
 
 .percent {
   position: absolute;
 
+  font-variant-numeric: tabular-nums;
   font-size: clamp(2rem, 6vw, 4rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: #111;
-
-  font-variant-numeric: tabular-nums;
 }
 
-.textStage {
+.text_stage {
   position: absolute;
   inset: 0;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
   padding: 0 2rem;
   text-align: center;
 }
@@ -55,8 +58,8 @@
   position: absolute;
 
   font-size: clamp(1.875rem, 1.1786rem + 2.8571vw, 3.75rem);
-  line-height: clamp(2.375rem, 1.5857rem + 3.2381vw, 4.5rem);
   font-weight: 700;
+  line-height: clamp(2.375rem, 1.5857rem + 3.2381vw, 4.5rem);
   color: #111;
 
   opacity: 0;

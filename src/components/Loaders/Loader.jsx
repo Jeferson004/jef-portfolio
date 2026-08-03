@@ -17,7 +17,7 @@ const Loader = ({ onComplete }) => {
   const loadingTween = useRef(null);
   const finishTween = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useScrollLock(isLoading);
 
   useEffect(() => {
@@ -59,11 +59,16 @@ const Loader = ({ onComplete }) => {
       });
 
       tl.to(loader, {
-        yPercent: 100,
+        opacity: 0,
+        filter: "blur(10px)",
         duration: 1.5,
         ease: "power4.inOut",
         onComplete: () => {
           document.removeEventListener("touchmove", preventTouch);
+
+          // prevent the invisible loader from blocking clicks
+          // during the gap before React unmounts it
+          gsap.set(loader, { pointerEvents: "none" });
 
           setIsLoading(false);
 
@@ -113,9 +118,7 @@ const Loader = ({ onComplete }) => {
       }
 
       return () => {
-        window.addEventListener("load", handleLoad, {
-          once: true,
-        });
+        window.removeEventListener("load", handleLoad);
 
         loadingTween.current?.kill();
         finishTween.current?.kill();
@@ -133,13 +136,15 @@ const Loader = ({ onComplete }) => {
     };
   }, [onComplete]);
 
+  if (!isLoading) return null;
+
   return (
     <div ref={loaderRef} className={s.loader}>
       <span ref={percentRef} className={s.percent}>
         0%
       </span>
 
-      <div className={s.textStage}>
+      <div className={s.text_stage}>
         {PHRASES.map((text, i) => (
           <span
             key={i}
