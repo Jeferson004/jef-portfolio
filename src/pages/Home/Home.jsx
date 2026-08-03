@@ -13,7 +13,7 @@ import gmailIcon from "../../assets/gmail_icon.svg";
 import Jvin from "../../assets/jvin.png";
 import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squidpay.png";
-import mouse from "../../assets/mouse_icon.svg";
+// import mouse from "../../assets/mouse_icon.svg";
 
 import mouseShape from "../../assets/mouse.svg";
 import mouseScroller from "../../assets/mouse_scroller.svg";
@@ -276,6 +276,13 @@ const Home = () => {
             {/* <div className={s.scroll_icon_and_text}>
               <div className={s.scroll_icon}>
                 <img src={mouse} alt="" loading="lazy" />
+              </div>
+              <p>SCROLL DOWN</p>
+            </div> */}
+
+            {/* <div className={s.scroll_icon_and_text_1}>
+              <div className={s.scroll_icon_1}>
+                <div className={s.scroll_icon_line_1}></div>
               </div>
               <p>SCROLL DOWN</p>
             </div> */}
