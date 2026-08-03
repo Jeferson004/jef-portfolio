@@ -262,7 +262,7 @@ const Home = () => {
               <a href="#linkedin" className={s.links}>
                 <img src={linkedinIcon} alt="LinkedIn" loading="lazy" />
               </a>
-              <a href="#github" className={s.links}>
+              <a href="https://github.com/Jeferson004" className={s.links}>
                 <img src={githubIcon} alt="GitHub" loading="lazy" />
               </a>
               <a href="#gmail" className={s.links}>
@@ -270,9 +270,16 @@ const Home = () => {
               </a>
             </div>
 
-            <div className={s.scroll_icon_and_text}>
+            {/* <div className={s.scroll_icon_and_text}>
               <div className={s.scroll_icon}>
                 <img src={mouse} alt="" loading="lazy" />
+              </div>
+              <p>SCROLL DOWN</p>
+            </div> */}
+
+            <div className={s.scroll_icon_and_text_1}>
+              <div className={s.scroll_icon_1}>
+                <div className={s.scroll_icon_line_1}></div>
               </div>
               <p>SCROLL DOWN</p>
             </div>
