@@ -485,20 +485,20 @@
 // ==================== MEDIA QUERIES ====================
 @media screen and (min-width: 768px) {
   .hero {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     position: relative;
     z-index: 1;
     padding-top: 64px;
     margin-top: 104px;
 
-    .container {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 0 16px;
-      width: 100%;
-    }
+    // .container {
+    //   max-width: 1440px;
+    //   margin: 0 auto;
+    //   padding: 0 16px;
+    //   width: 100%;
+    // }
 
     .header_and_parag {
       .activeStatus_mobile {
@@ -698,7 +698,8 @@
   .marquee,
   .about,
   .beyond {
-    padding-inline: 124px;
+    // padding-inline: 124px;
+    padding-inline: 24px;
   }
 
   .processes {
@@ -706,6 +707,9 @@
       padding-left: 0;
       flex-direction: row;
       padding-top: 16px;
+
+      min-width: 1224px;
+      margin-inline: auto;
     }
 
     .processes_line {
