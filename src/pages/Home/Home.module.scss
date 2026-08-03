@@ -158,11 +158,13 @@
     row-gap: 16px;
     align-items: flex-start;
     width: max-content;
+    position: relative;
+    left: -16px;
 
     .links {
       padding: 10px;
       background-color: #ffffff;
-      border-radius: 12px;
+      border-radius: 0 12px 12px 0;
       transition: transform 0.3s ease-in-out;
       outline: 1px solid rgba(0, 0, 0, 0.1);
 
@@ -510,6 +512,14 @@
   }
 
   .scroll_down_and_active_status {
+    .socials_menu {
+      left: 0;
+      top: 0;
+      .links {
+        border-radius: 12px;
+      }
+    }
+
     .activeStatus_desktop {
       padding: 12px 24px;
       display: flex;
