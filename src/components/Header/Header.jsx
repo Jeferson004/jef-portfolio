@@ -83,7 +83,7 @@ const Header = () => {
     }
   };
 
-  const email = "jeffmuring12@gmail.com";
+  const email = "jefersonmuring680@gmail.com";
   const subject = "Inquiry: Let's Discuss Collaboration";
   const body = "";
   const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
