@@ -1,14 +1,16 @@
-import "./App.css";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
+import gsap from "gsap";
 
+// Styles
+import "./App.css";
+
+// Components
 import Header from "./components/Header/Header.jsx";
 import Home from "./pages/Home/Home.jsx";
 import Footer from "./components/Footer/Footer.jsx";
 import Noise from "./components/Noise/Noise.jsx";
-
 import Loader from "./components/Loaders/Loader.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -66,6 +68,10 @@ function App() {
             anchors: true,
             duration: 3,
             smoothWheel: true,
+
+            prevent: (node) => {
+              return node.closest(".lenis-stop");
+            },
           }}
         >
           <Header />

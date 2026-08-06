@@ -1,12 +1,24 @@
 import { useEffect, useRef, useState } from "react";
-import s from "./Header.module.scss";
-import useScrollLock from "../../hooks/useScrollLock";
 import { useLenis } from "lenis/react";
+
+// style
+import s from "./Header.module.scss";
 
 // images
 import OpenMenu from "../../assets/open_menu.svg";
 import CloseMenu from "../../assets/close_menu.svg";
 import Logo from "../../assets/favicon.svg";
+
+const getDeviceType = () => {
+  if (typeof navigator === "undefined") {
+    return { isAndroid: false, isIOS: false, isMobile: false };
+  }
+  const ua = navigator.userAgent;
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad/i.test(ua);
+  const isMobile = /Android|webOS|iPhone|iPad|BlackBerry|Opera Mini/i.test(ua);
+  return { isAndroid, isIOS, isMobile };
+};
 
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -14,12 +26,10 @@ const Header = () => {
   const lastScroll = useRef(0);
   const lenis = useLenis();
 
-  useScrollLock(menuOpen);
+  useEffect(() => {
+    if (!lenis) return;
 
-  useEffect(()=> {
-    if(!lenis) return;
-
-    if(menuOpen) {
+    if (menuOpen) {
       lenis.stop();
     } else {
       lenis.start();
@@ -31,7 +41,6 @@ const Header = () => {
       const currentScroll = window.scrollY;
 
       if (Math.abs(currentScroll - lastScroll.current) < 5) return;
-
       if (currentScroll > lastScroll.current && currentScroll > 100) {
         setHidden(true);
       } else {
@@ -74,6 +83,22 @@ const Header = () => {
     }
   };
 
+  const email = "jeffmuring12@gmail.com";
+  const subject = "Inquiry: Let's Discuss Collaboration";
+  const body = "";
+  const gmailHref = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const [device] = useState(getDeviceType);
+  const { isAndroid, isIOS, isMobile } = device;
+  let mobileGmailHref = gmailHref;
+
+  if (isAndroid) {
+    mobileGmailHref = `intent://send?to=${email}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}#Intent;scheme=mailto;package=com.google.android.gm;end;`;
+  } else if (isIOS || isMobile) {
+    mobileGmailHref = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  const finalGmailHref = isMobile ? mobileGmailHref : gmailHref;
+
   return (
     <header
       className={`
@@ -94,7 +119,9 @@ const Header = () => {
           />
         </div>
 
-        <div className={`${s.menu_container} ${menuOpen ? s.open : ""}`}>
+        <div
+          className={`${s.menu_container} ${menuOpen ? s.open : ""} lenis-stop`}
+        >
           <ul className={s.menu}>
             <li>
               <a href="#projects" onClick={handleLinkClick}>
@@ -115,7 +142,12 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a href="#reachout" onClick={handleLinkClick}>
+              <a
+                href={finalGmailHref}
+                target={isMobile ? undefined : "_blank"}
+                rel={isMobile ? undefined : "noopener noreferrer"}
+                onClick={handleLinkClick}
+              >
                 REACH OUT
               </a>
             </li>
