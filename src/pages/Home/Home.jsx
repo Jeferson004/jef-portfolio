@@ -8,7 +8,7 @@ import ScrollIndicator from "../../components/ScrollIndicator/ScrollIndicator.js
 // Images
 import linkedinIcon from "../../assets/linkedin_icon.svg";
 import githubIcon from "../../assets/github_icon.svg";
-import gmailIcon from "../../assets/gmail_icon.svg";
+// import gmailIcon from "../../assets/gmail_icon.svg";
 // import Avatar from "../../assets/avatar.png";
 import Jvin from "../../assets/jvin.png";
 import Banwa from "../../assets/banwa.png";
@@ -24,33 +24,34 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const projects = [
+  {
+    img: Jvin,
+    alt: "Jvin site",
+    chip: "Client Project",
+    title: "Product Designer Portfolio",
+    desc: "Part-time freelance front-end development for a live client portfolio site",
+    href: "https://jvin.site/",
+  },
+  {
+    img: Banwa,
+    alt: "Banwa site",
+    chip: "Backend Development",
+    title: "BANWA: Backend & API Architecture",
+    desc: "API development, hosting, and access control for a local government service platform",
+    href: "https://banwa-evw1.onrender.com/",
+  },
+  {
+    img: SquidPay,
+    alt: "SquidPay site",
+    chip: "Personal Project",
+    title: "Fintech Landing Page (Concept Build)",
+    desc: "Self-initiated front-end project replicating a payments platform landing page",
+    href: "https://01p2024.netlify.app/",
+  },
+];
+
 const Home = () => {
-  const projects = [
-    {
-      img: Jvin,
-      alt: "Jvin site",
-      chip: "Client Project",
-      title: "Product Designer Portfolio",
-      desc: "Part-time freelance front-end development for a live client portfolio site",
-      href: "#Jvin",
-    },
-    {
-      img: Banwa,
-      alt: "Banwa site",
-      chip: "Backend Development",
-      title: "BANWA: Backend & API Architecture",
-      desc: "API development, hosting, and access control for a local government service platform",
-      href: "#Banwa",
-    },
-    {
-      img: SquidPay,
-      alt: "SquidPay site",
-      chip: "Personal Project",
-      title: "Fintech Landing Page (Concept Build)",
-      desc: "Self-initiated front-end project replicating a payments platform landing page",
-      href: "#Squidpay",
-    },
-  ];
 
   const aboutRef = useRef(null);
   const beyondRef = useRef(null);
@@ -65,7 +66,7 @@ const Home = () => {
   const displayIndexRef = useRef(0);
   const processesLineRef = useRef(null);
 
-  // ==================== HERO SECTION ====================
+  // ==================== FOR HERO SECTION ANIMATION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const items = gsap.utils
@@ -95,14 +96,13 @@ const Home = () => {
     return () => ctx.revert();
   }, []);
 
-  // ==================== PROJECTS SECTION ====================
+  // ==================== FOR PROJECTS SECTION ANIMATION ====================
   useEffect(() => {
     projects.forEach((project) => {
       const img = new Image();
       img.src = project.img;
     });
-  });
-
+  }, []);
   // Swaps the visible project content, with a fade-out -> swap -> fade-in.
   const changeDisplayedProject = (index) => {
     if (displayIndexRef.current === index) return;
@@ -111,6 +111,10 @@ const Home = () => {
     const image = cardContentRef.current.querySelector(
       `.${s.project_image} img`,
     );
+
+    if (!image) return;
+
+    gsap.killTweensOf(image);
 
     gsap.to(image, {
       opacity: 0,
@@ -160,32 +164,38 @@ const Home = () => {
   }, [displayIndex]);
 
   useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const scenes = gsap.utils.toArray(`.${s.project_scene}`);
+    const mm = gsap.matchMedia();
 
-      scenes.forEach((scene, i) => {
-        ScrollTrigger.create({
-          trigger: scene,
-          start: "top center",
-          end: "bottom center",
-          onEnter: () => {
-            setActiveProject(i);
-            changeDisplayedProject(i);
-          },
-          onEnterBack: () => {
-            setActiveProject(i);
-            changeDisplayedProject(i);
-          },
+    mm.add("(min-width: 768px)", () => {
+      const ctx = gsap.context(() => {
+        const scenes = gsap.utils.toArray(`.${s.project_scene}`);
+
+        scenes.forEach((scene, i) => {
+          ScrollTrigger.create({
+            trigger: scene,
+            start: "top center",
+            end: "bottom center",
+            onEnter: () => {
+              setActiveProject(i);
+              changeDisplayedProject(i);
+            },
+            onEnterBack: () => {
+              setActiveProject(i);
+              changeDisplayedProject(i);
+            },
+          });
         });
-      });
-    }, projectsRef);
+      }, projectsRef);
 
-    return () => ctx.revert();
+      return () => ctx.revert();
+    });
+
+    return () => mm.revert();
   }, []);
 
   const current = projects[displayIndex];
 
-  // ==================== ABOUT SECTION ====================
+  // ==================== FOR ABOUT SECTION ANIMATION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from([aboutTitleRef.current, aboutTextRef.current], {
@@ -262,15 +272,18 @@ const Home = () => {
 
           <div className={s.scroll_down_and_active_status}>
             <div className={s.socials_menu}>
-              <a href="#linkedin" className={s.links}>
+              <a
+                href="https://linkedin.com/in/jeferson-muring-9242aa420"
+                className={s.links}
+              >
                 <img src={linkedinIcon} alt="LinkedIn" loading="lazy" />
               </a>
               <a href="https://github.com/Jeferson004" className={s.links}>
                 <img src={githubIcon} alt="GitHub" loading="lazy" />
               </a>
-              <a href="#gmail" className={s.links}>
+              {/* <a href="#gmail" className={s.links}>
                 <img src={gmailIcon} alt="Gmail" loading="lazy" />
-              </a>
+              </a> */}
             </div>
 
             {/* <div className={s.scroll_icon_and_text}>
@@ -406,6 +419,24 @@ const Home = () => {
               </a>
             </div>
           </div>
+        </div>
+
+        {/* Static, non-animated list for mobile */}
+        <div className={s.mobile_projects_list}>
+          {projects.map((p) => (
+            <a href={p.href} className={s.cols} key={p.title}>
+              <div className={s.project_card_container}>
+                <div className={s.project_image}>
+                  <img src={p.img} alt={p.alt} loading="lazy" />
+                </div>
+                <div className={s.chip_and_texts}>
+                  <div className={s.chips}>{p.chip}</div>
+                  <h6>{p.title}</h6>
+                  <p>{p.desc}</p>
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
       </section>
 
