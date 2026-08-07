@@ -13,6 +13,7 @@ const Footer = () => {
   const outlineTextRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
+  // ========== Text outline compatability for mobile ========== 
   useLayoutEffect(() => {
     const mql = window.matchMedia("(max-width: 768px)");
     const update = () => setIsMobile(mql.matches);
@@ -21,6 +22,7 @@ const Footer = () => {
     return () => mql.removeEventListener("change", update);
   }, []);
 
+  // ========== Text outline animation ========== 
   useLayoutEffect(() => {
     const svg = outlineSvgRef.current;
     const text = outlineTextRef.current;
@@ -85,8 +87,12 @@ const Footer = () => {
             <text ref={outlineTextRef} textAnchor="start" x="0" y="0.8em">
               {isMobile ? (
                 <>
-                  <tspan x="0" dy="0">LET'S</tspan>
-                  <tspan x="0" dy="1em">BUILD</tspan>
+                  <tspan x="0" dy="0">
+                    LET'S
+                  </tspan>
+                  <tspan x="0" dy="1em">
+                    BUILD
+                  </tspan>
                 </>
               ) : (
                 "LET'S BUILD"
