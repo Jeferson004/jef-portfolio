@@ -66,7 +66,7 @@ function App() {
           ref={lenisRef}
           options={{
             anchors: true,
-            duration: 3,
+            duration: 2,
             smoothWheel: true,
 
             prevent: (node) => {
