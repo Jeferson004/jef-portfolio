@@ -83,11 +83,11 @@ const Home = () => {
       tl.fromTo(
         processesLineRef.current,
         { "--progress": 0 },
-        { "--progress": 1, duration: 0.6, ease: "power2.out" },
+        { "--progress": 1, duration: 0.4, ease: "power2.out" },
       ).from(items, {
         clipPath: "inset(0 0 100% 0)",
         y: 40,
-        stagger: 0.15,
+        stagger: 0.08,
         ease: "power2.out",
       });
     });
