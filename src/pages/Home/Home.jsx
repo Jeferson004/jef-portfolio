@@ -103,6 +103,7 @@ const Home = () => {
       img.src = project.img;
     });
   }, []);
+  
   // Swaps the visible project content, with a fade-out -> swap -> fade-in.
   const changeDisplayedProject = (index) => {
     if (displayIndexRef.current === index) return;
