@@ -9,6 +9,25 @@ const PHRASES = [
   "Let's get started.",
 ];
 
+const LOADER_KEY = "loader_shown";
+
+// safe wrappers so storage errors never crash the component
+const safeGet = (key) => {
+  try {
+    return window.sessionStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const safeSet = (key, value) => {
+  try {
+    window.sessionStorage.setItem(key, value);
+  } catch {
+    // storage unavailable (private mode, disabled, sandboxed iframe) — ignore
+  }
+};
+
 const Loader = ({ onComplete }) => {
   const loaderRef = useRef(null);
   const percentRef = useRef(null);
@@ -16,11 +35,25 @@ const Loader = ({ onComplete }) => {
   const counter = useRef({ value: 0 });
   const loadingTween = useRef(null);
   const finishTween = useRef(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const hasCompleted = useRef(false); // guard against calling onComplete twice
+
+  const [shouldShow] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return !safeGet(LOADER_KEY);
+  });
+  const [isLoading, setIsLoading] = useState(shouldShow);
 
   useScrollLock(isLoading);
 
   useEffect(() => {
+    if (!shouldShow) {
+      if (!hasCompleted.current) {
+        hasCompleted.current = true;
+        onComplete?.();
+      }
+      return;
+    }
+
     const loader = loaderRef.current;
     if (!loader) return;
 
@@ -66,15 +99,17 @@ const Loader = ({ onComplete }) => {
         onComplete: () => {
           document.removeEventListener("touchmove", preventTouch);
 
-          // prevent the invisible loader from blocking clicks
-          // during the gap before React unmounts it
           gsap.set(loader, { pointerEvents: "none" });
 
+          safeSet(LOADER_KEY, "true");
           setIsLoading(false);
 
-          requestAnimationFrame(() => {
-            onComplete?.();
-          });
+          if (!hasCompleted.current) {
+            hasCompleted.current = true;
+            requestAnimationFrame(() => {
+              onComplete?.();
+            });
+          }
         },
       });
 
@@ -134,7 +169,8 @@ const Loader = ({ onComplete }) => {
 
       document.removeEventListener("touchmove", preventTouch);
     };
-  }, [onComplete]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldShow]); // onComplete intentionally excluded — see note below
 
   if (!isLoading) return null;
 
