@@ -52,7 +52,6 @@ const projects = [
 ];
 
 const Home = () => {
-
   const aboutRef = useRef(null);
   const beyondRef = useRef(null);
   const projectsRef = useRef(null);
@@ -103,7 +102,7 @@ const Home = () => {
       img.src = project.img;
     });
   }, []);
-  
+
   // Swaps the visible project content, with a fade-out -> swap -> fade-in.
   const changeDisplayedProject = (index) => {
     if (displayIndexRef.current === index) return;
@@ -236,22 +235,6 @@ const Home = () => {
 
   return (
     <>
-      {/* <div className={s.circle_container}>
-        <div className={s.background}>
-          <div className={s.circle_1}>
-            <div className={s.orbit}>
-              <div className={s.dot}></div>
-            </div>
-          </div>
-
-          <div className={s.circle_2}>
-            <div className={s.orbit}>
-              <div className={s.dot}></div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
       {/* ==================== Hero Section ==================== */}
       <section className={s.hero} id="hero">
         <div className={s.container}>
@@ -282,24 +265,7 @@ const Home = () => {
               <a href="https://github.com/Jeferson004" className={s.links}>
                 <img src={githubIcon} alt="GitHub" loading="lazy" />
               </a>
-              {/* <a href="#gmail" className={s.links}>
-                <img src={gmailIcon} alt="Gmail" loading="lazy" />
-              </a> */}
             </div>
-
-            {/* <div className={s.scroll_icon_and_text}>
-              <div className={s.scroll_icon}>
-                <img src={mouse} alt="" loading="lazy" />
-              </div>
-              <p>SCROLL DOWN</p>
-            </div> */}
-
-            {/* <div className={s.scroll_icon_and_text_1}>
-              <div className={s.scroll_icon_1}>
-                <div className={s.scroll_icon_line_1}></div>
-              </div>
-              <p>SCROLL DOWN</p>
-            </div> */}
 
             <div className={s.scroll_icon_and_text_1}>
               <div className={s.scroll_icon_1}>
@@ -317,39 +283,6 @@ const Home = () => {
               Open to Work
             </a>
           </div>
-
-          {/* <div className={s.outline_text_and_profile}>
-            <svg className={s.outline_text} ref={outlineSvgRef}>
-              <text ref={outlineTextRef} x="0" y="0.8em">
-                LET'S BUILD
-              </text>
-            </svg>
-            <div className={s.circle_wrapper}>
-              <div className={s.circle_text}>
-                <svg viewBox="0 0 200 200">
-                  <defs>
-                    <path
-                      id="circlePath"
-                      d="
-                        M 100,100
-                        m -80.68,0
-                        a 80.68,80.68 0 1,1 161.36,0
-                        a 80.68,80.68 0 1,1 -161.36,0
-                      "
-                    />
-                  </defs>
-
-                  <text>
-                    <textPath href="#circlePath" startOffset="50%">
-                      FRONTEND DEVELOPER • SHOOT ME A MESSAGE •
-                    </textPath>
-                  </text>
-                </svg>
-              </div>
-
-              <img className={s.circle_avatar} src={Avatar} alt="" />
-            </div>
-          </div> */}
 
           <div className={s.processes}>
             <div className={s.row}>
@@ -386,6 +319,7 @@ const Home = () => {
 
       {/* ==================== Projects Section ==================== */}
       <section className={s.projects} id="projects" ref={projectsRef}>
+        <h2 className={s.hideit}>Projects</h2>
         <div className={s.outer_row}>
           <div className={s.indicator_wrapper}>
             <ScrollIndicator count={projects.length} active={activeProject} />
@@ -401,7 +335,7 @@ const Home = () => {
               ))}
             </div>
 
-            <div className={s.sticky_card}>
+            <article className={s.sticky_card}>
               <a
                 href={current.href}
                 className={`${s.cols} ${s.project_card}`}
@@ -413,30 +347,32 @@ const Home = () => {
                   </div>
                   <div className={s.chip_and_texts}>
                     <div className={s.chips}>{current.chip}</div>
-                    <h6>{current.title}</h6>
+                    <h3>{current.title}</h3>
                     <p>{current.desc}</p>
                   </div>
                 </div>
               </a>
-            </div>
+            </article>
           </div>
         </div>
 
         {/* Static, non-animated list for mobile */}
         <div className={s.mobile_projects_list}>
           {projects.map((p) => (
-            <a href={p.href} className={s.cols} key={p.title}>
-              <div className={s.project_card_container}>
-                <div className={s.project_image}>
-                  <img src={p.img} alt={p.alt} loading="lazy" />
+            <article key={p.title}>
+              <a href={p.href} className={s.cols}>
+                <div className={s.project_card_container}>
+                  <div className={s.project_image}>
+                    <img src={p.img} alt={p.alt} loading="lazy" />
+                  </div>
+                  <div className={s.chip_and_texts}>
+                    <div className={s.chips}>{p.chip}</div>
+                    <h3>{p.title}</h3>
+                    <p>{p.desc}</p>
+                  </div>
                 </div>
-                <div className={s.chip_and_texts}>
-                  <div className={s.chips}>{p.chip}</div>
-                  <h6>{p.title}</h6>
-                  <p>{p.desc}</p>
-                </div>
-              </div>
-            </a>
+              </a>
+            </article>
           ))}
         </div>
       </section>
