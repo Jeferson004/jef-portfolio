@@ -51,6 +51,64 @@ const projects = [
   },
 ];
 
+const PROCESSES = [
+  {
+    title: "01 Understand",
+    desc: "I start by figuring out what the project's actually trying to solve.",
+  },
+  {
+    title: "02 Design to code",
+    desc: "Then I translate the visuals into responsive, working front-end.",
+  },
+  {
+    title: "03 Build & test",
+    desc: "I write the code, then break it, so I can fix it properly.",
+  },
+  {
+    title: "04 Ship",
+    desc: "Once it's solid, it goes live, and I keep an eye on it early on.",
+  },
+];
+
+const ABOUT_PARAGRAPH_1 =
+  "The first time I saw code, I was hooked by curiosity. How did a button change color on click? How did a page transition to another with just a few lines? I had to know, so I started recreating those little interactions myself.";
+
+const ABOUT_PARAGRAPH_2 =
+  "The moment my first line of code actually worked, something clicked. That small win turned into a genuine passion, and it's been the same ever since: building, breaking things, learning, and getting a little better with every project.";
+
+const BEYOND_TEXT =
+  "Photography is where I slow down and look at things differently.";
+
+// Splits a string into word spans and stores each word element into a
+// ref array at a stable index, so refs stay aligned across re-renders.
+// Used for static, scroll-triggered sections (processes / about / beyond)
+// where refs can be collected once and read directly by GSAP.
+const renderWords = (text, refsArray, counter, className) =>
+  text.split(" ").map((word, i, arr) => {
+    const idx = counter.i++;
+    return (
+      <span
+        key={idx}
+        ref={(el) => (refsArray.current[idx] = el)}
+        className={className}
+      >
+        {word}
+        {i < arr.length - 1 ? "\u00A0" : ""}
+      </span>
+    );
+  });
+
+// Splits a string into word spans without refs. Used for the project card
+// content, which swaps text on every scroll step — those words are picked
+// up by a DOM query at animation time instead of persisted refs.
+const wordsSpan = (text, className) =>
+  text.split(" ").map((word, i, arr) => (
+    <span key={i} className={className}>
+      {word}
+      {i < arr.length - 1 ? "\u00A0" : ""}
+    </span>
+  ));
+
 const Home = () => {
   const aboutRef = useRef(null);
   const beyondRef = useRef(null);
@@ -65,13 +123,14 @@ const Home = () => {
   const displayIndexRef = useRef(0);
   const processesLineRef = useRef(null);
 
+  // word-level ref buckets for scroll-triggered sections
+  const processesWordsRef = useRef([]);
+  const aboutWordsRef = useRef([]);
+  const beyondWordsRef = useRef([]);
+
   // ==================== FOR HERO SECTION ANIMATION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      const items = gsap.utils
-        .toArray(`.${s.cols}`)
-        .flatMap((col) => Array.from(col.children));
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: `.${s.processes}`,
@@ -84,10 +143,11 @@ const Home = () => {
         processesLineRef.current,
         { "--progress": 0 },
         { "--progress": 1, duration: 0.4, ease: "power2.out" },
-      ).from(items, {
+      ).from(processesWordsRef.current, {
         clipPath: "inset(0 0 100% 0)",
         y: 40,
-        stagger: 0.08,
+        duration: 0.6,
+        stagger: 0.02,
         ease: "power2.out",
       });
     });
@@ -124,18 +184,18 @@ const Home = () => {
     });
   };
 
-  // Fade the new content in every time displayIndex changes.
+  // Fade the new content in every time displayIndex changes, word by word.
   useLayoutEffect(() => {
     if (!cardContentRef.current) return;
 
     const image = cardContentRef.current.querySelector(
       `.${s.project_image} img`,
     );
-    const texts = cardContentRef.current.querySelectorAll(
-      `.${s.chip_and_texts} > *`,
+    const words = cardContentRef.current.querySelectorAll(
+      `.${s.chip_and_texts} .${s.word}`,
     );
 
-    gsap.set(texts, {
+    gsap.set(words, {
       clipPath: "inset(0 0 100% 0)",
       y: 40,
     });
@@ -147,16 +207,16 @@ const Home = () => {
       { opacity: 0 },
       {
         opacity: 1,
-        duration: 0.35,
+        duration: 0.32,
         ease: "power1.out",
       },
     ).to(
-      texts,
+      words,
       {
         clipPath: "inset(0 0 0% 0)",
         y: 0,
-        stagger: 0.15,
-        duration: 0.45,
+        duration: 0.6,
+        stagger: 0.02,
         ease: "power2.out",
       },
       "-=0.15",
@@ -198,10 +258,11 @@ const Home = () => {
   // ==================== FOR ABOUT SECTION ANIMATION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from([aboutTitleRef.current, aboutTextRef.current], {
+      gsap.from(aboutWordsRef.current, {
         clipPath: "inset(0 0 100% 0)",
         y: 40,
-        stagger: 0.15,
+        duration: 0.6,
+        stagger: 0.02,
         ease: "power2.out",
         scrollTrigger: {
           trigger: aboutRef.current,
@@ -217,10 +278,11 @@ const Home = () => {
   // ==================== BEYOND SECTION ====================
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from([beyondTitleRef.current, beyondTextRef.current], {
+      gsap.from(beyondWordsRef.current, {
         clipPath: "inset(0 0 100% 0)",
         y: 40,
-        stagger: 0.15,
+        duration: 0.6,
+        stagger: 0.02,
         ease: "power2.out",
         scrollTrigger: {
           trigger: beyondRef.current,
@@ -232,6 +294,12 @@ const Home = () => {
 
     return () => ctx.revert();
   }, []);
+
+  // Fresh counters per render — word order is static per section, so index
+  // assignment stays aligned with the ref arrays across re-renders.
+  const processesCounter = { i: 0 };
+  const aboutCounter = { i: 0 };
+  const beyondCounter = { i: 0 };
 
   return (
     <>
@@ -287,31 +355,27 @@ const Home = () => {
           <div className={s.processes}>
             <div className={s.row}>
               <div className={s.processes_line} ref={processesLineRef}></div>
-              <div className={s.cols}>
-                <p>01 Understand</p>
-                <p>
-                  I start by figuring out what the project's actually trying to
-                  solve.
-                </p>
-              </div>
-              <div className={s.cols}>
-                <p>02 Design to code</p>
-                <p>
-                  Then I translate the visuals into responsive, working
-                  front-end.
-                </p>
-              </div>
-              <div className={s.cols}>
-                <p>03 Build & test</p>
-                <p>I write the code, then break it,so I can fix it properly.</p>
-              </div>
-              <div className={s.cols}>
-                <p>04 Ship</p>
-                <p>
-                  Once it's solid, it goes live, and I keep an eye on it early
-                  on.
-                </p>
-              </div>
+
+              {PROCESSES.map((step) => (
+                <div className={s.cols} key={step.title}>
+                  <p>
+                    {renderWords(
+                      step.title,
+                      processesWordsRef,
+                      processesCounter,
+                      s.word,
+                    )}
+                  </p>
+                  <p>
+                    {renderWords(
+                      step.desc,
+                      processesWordsRef,
+                      processesCounter,
+                      s.word,
+                    )}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -346,9 +410,11 @@ const Home = () => {
                     <img src={current.img} alt={current.alt} loading="lazy" />
                   </div>
                   <div className={s.chip_and_texts}>
-                    <div className={s.chips}>{current.chip}</div>
-                    <h3>{current.title}</h3>
-                    <p>{current.desc}</p>
+                    <div className={s.chips}>
+                      {wordsSpan(current.chip, s.word)}
+                    </div>
+                    <h3>{wordsSpan(current.title, s.word)}</h3>
+                    <p>{wordsSpan(current.desc, s.word)}</p>
                   </div>
                 </div>
               </a>
@@ -383,19 +449,25 @@ const Home = () => {
       {/* ==================== About me Section ==================== */}
       <section className={s.about} id="about">
         <div className={s.header_and_parag} ref={aboutRef}>
-          <h1 ref={aboutTitleRef}>About</h1>
+          <h1 ref={aboutTitleRef}>
+            {renderWords("About", aboutWordsRef, aboutCounter, s.word)}
+          </h1>
 
           <h6 ref={aboutTextRef}>
-            The first time I saw code, I was hooked by curiosity. How did a
-            button change color on click? How did a page transition to another
-            with just a few lines? I had to know, so I started recreating those
-            little interactions myself.
+            {renderWords(
+              ABOUT_PARAGRAPH_1,
+              aboutWordsRef,
+              aboutCounter,
+              s.word,
+            )}
             <br />
             <br />
-            The moment my first line of code actually worked, something clicked.
-            That small win turned into a genuine passion, and it's been the same
-            ever since: building, breaking things, learning, and getting a
-            little better with every project.
+            {renderWords(
+              ABOUT_PARAGRAPH_2,
+              aboutWordsRef,
+              aboutCounter,
+              s.word,
+            )}
           </h6>
         </div>
       </section>
@@ -403,9 +475,16 @@ const Home = () => {
       {/* ==================== Beyond the code Section ==================== */}
       <section className={s.beyond} id="beyond">
         <div className={s.textCard} ref={beyondRef}>
-          <h1 ref={beyondTitleRef}>Beyond the code</h1>
+          <h1 ref={beyondTitleRef}>
+            {renderWords(
+              "Beyond the code",
+              beyondWordsRef,
+              beyondCounter,
+              s.word,
+            )}
+          </h1>
           <p ref={beyondTextRef}>
-            Photography is where I slow down and look at things differently.
+            {renderWords(BEYOND_TEXT, beyondWordsRef, beyondCounter, s.word)}
           </p>
         </div>
 

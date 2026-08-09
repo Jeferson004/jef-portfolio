@@ -22,6 +22,11 @@
   padding-top: 10.25rem;
 }
 
+.word {
+  display: inline-block;
+  will-change: clip-path, transform;
+}
+
 // ==================== HERO SECTION ====================
 .hero {
   padding-top: 5.5rem;
