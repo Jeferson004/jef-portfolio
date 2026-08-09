@@ -31,7 +31,7 @@ const safeSet = (key, value) => {
 const Loader = ({ onComplete }) => {
   const loaderRef = useRef(null);
   const percentRef = useRef(null);
-  const textRefs = useRef([]);
+  const wordRefs = useRef([]); // wordRefs.current[phraseIndex] = [wordEl, wordEl, ...]
   const counter = useRef({ value: 0 });
   const loadingTween = useRef(null);
   const finishTween = useRef(null);
@@ -72,23 +72,30 @@ const Loader = ({ onComplete }) => {
         ease: "power2.out",
       });
 
-      textRefs.current.forEach((el) => {
-        if (!el) return;
+      wordRefs.current.forEach((words) => {
+        if (!words || !words.length) return;
 
-        tl.to(el, {
+        // words rise up from bottom, fading in, staggered
+        tl.to(words, {
           opacity: 1,
           y: 0,
           duration: 0.5,
           ease: "power3.out",
+          stagger: 0.05,
         });
 
-        tl.to(el, {
-          opacity: 0,
-          y: -20,
-          duration: 0.4,
-          ease: "power3.in",
-          delay: 0.6,
-        });
+        // words fade out while drifting up, staggered
+        tl.to(
+          words,
+          {
+            opacity: 0,
+            y: -20,
+            duration: 0.4,
+            ease: "power3.in",
+            stagger: 0.03,
+          },
+          "+=0.6"
+        );
       });
 
       tl.to(loader, {
@@ -181,15 +188,27 @@ const Loader = ({ onComplete }) => {
       </span>
 
       <div className={s.text_stage}>
-        {PHRASES.map((text, i) => (
-          <span
-            key={i}
-            ref={(el) => (textRefs.current[i] = el)}
-            className={s.text}
-          >
-            {text}
-          </span>
-        ))}
+        {PHRASES.map((text, i) => {
+          const words = text.split(" ");
+
+          return (
+            <span key={i} className={s.text}>
+              {words.map((word, j) => (
+                <span
+                  key={j}
+                  ref={(el) => {
+                    if (!wordRefs.current[i]) wordRefs.current[i] = [];
+                    wordRefs.current[i][j] = el;
+                  }}
+                  className={s.word}
+                >
+                  {word}
+                  {j < words.length - 1 ? "\u00A0" : ""}
+                </span>
+              ))}
+            </span>
+          );
+        })}
       </div>
     </div>
   );
