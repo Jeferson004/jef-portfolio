@@ -12,11 +12,12 @@
 
 html {
   scroll-behavior: smooth;
+  cursor: none;
 }
 
 body {
-    background-color: $bg-clr;
-    font-family: $font-family;
+  background-color: $bg-clr;
+  font-family: $font-family;
 }
 
 // utils
@@ -26,7 +27,7 @@ ul {
 
 a {
   text-decoration: none;
-  display:block;
+  display: block;
   // white-space: nowrap;
 }
 

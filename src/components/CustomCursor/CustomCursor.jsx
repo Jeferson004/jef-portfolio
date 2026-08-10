@@ -26,8 +26,10 @@ const CustomCursor = () => {
     if (isTouchDevice) return;
 
     const cursor = cursorRef.current;
-
     if (!cursor) return;
+
+    // Enable native-cursor hiding only while this effect is active
+    document.body.classList.add("customCursorActive");
 
     const xTo = gsap.quickTo(cursor, "x", {
       duration: 0.15,
@@ -73,6 +75,7 @@ const CustomCursor = () => {
     window.addEventListener("scroll", handleScroll, { passive: true, capture: true });
 
     return () => {
+      document.body.classList.remove("customCursorActive");
       window.removeEventListener("mousemove", moveCursor);
       window.removeEventListener("wheel", handleScroll);
       window.removeEventListener("scroll", handleScroll, { capture: true });
