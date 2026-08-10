@@ -69,11 +69,6 @@ function App() {
           options={{
             anchors: true,
             duration: 2,
-            smoothWheel: true,
-
-            prevent: (node) => {
-              return node.closest(".lenis-stop");
-            },
           }}
         >
           <Header />

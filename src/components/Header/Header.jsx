@@ -120,9 +120,8 @@ const Header = () => {
         </div>
 
         <div
-          className={`${s.menu_container} ${menuOpen ? s.open : ""} ${
-            isMobile && menuOpen ? "lenis-stop" : ""
-          }`}
+          className={`${s.menu_container} ${menuOpen ? s.open : ""}`}
+          data-lenis-prevent
         >
           <ul className={s.menu}>
             <li>
