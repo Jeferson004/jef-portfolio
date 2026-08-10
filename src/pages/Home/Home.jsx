@@ -32,6 +32,7 @@ const projects = [
     title: "Product Designer Portfolio",
     desc: "Part-time freelance front-end development for a live client portfolio site",
     href: "https://jvin.site/",
+    target: "_blank",
   },
   {
     img: Banwa,
@@ -40,6 +41,7 @@ const projects = [
     title: "BANWA: Backend & API Architecture",
     desc: "API development, hosting, and access control for a local government service platform",
     href: "https://banwa-evw1.onrender.com/",
+    target: "_blank",
   },
   {
     img: SquidPay,
@@ -48,6 +50,7 @@ const projects = [
     title: "Fintech Landing Page (Concept Build)",
     desc: "Self-initiated front-end project replicating a payments platform landing page",
     href: "https://01p2024.netlify.app/",
+    target: "_blank",
   },
 ];
 
@@ -327,10 +330,17 @@ const Home = () => {
               <a
                 href="https://linkedin.com/in/jeferson-muring-9242aa420"
                 className={s.links}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <img src={linkedinIcon} alt="LinkedIn" loading="lazy" />
               </a>
-              <a href="https://github.com/Jeferson004" className={s.links}>
+              <a
+                href="https://github.com/Jeferson004"
+                className={s.links}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <img src={githubIcon} alt="GitHub" loading="lazy" />
               </a>
             </div>
@@ -404,6 +414,8 @@ const Home = () => {
                 href={current.href}
                 className={`${s.cols} ${s.project_card}`}
                 ref={cardContentRef}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <div className={s.project_card_container}>
                   <div className={s.project_image}>
@@ -426,7 +438,12 @@ const Home = () => {
         <div className={s.mobile_projects_list}>
           {projects.map((p) => (
             <article key={p.title}>
-              <a href={p.href} className={s.cols}>
+              <a
+                href={p.href}
+                className={s.cols}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <div className={s.project_card_container}>
                   <div className={s.project_image}>
                     <img src={p.img} alt={p.alt} loading="lazy" />
