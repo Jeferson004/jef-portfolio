@@ -43,10 +43,7 @@
   }
 
   :global(a),
-  :global(button),
-  :global(input),
-  :global(textarea),
-  :global(select) {
+  :global(button) {
     cursor: none;
   }
 }
