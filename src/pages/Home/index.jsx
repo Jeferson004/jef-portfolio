@@ -2,19 +2,15 @@
 import s from "./Home.module.scss";
 
 // Components
-import Marquee from "../../components/Marquee/Marquee.jsx";
-import ScrollIndicator from "../../components/ScrollIndicator/ScrollIndicator.jsx";
+import Marquee from "../../components/Marquee/";
+import ScrollIndicator from "../../components/ScrollIndicator/";
 
 // Images
 import linkedinIcon from "../../assets/linkedin_icon.svg";
 import githubIcon from "../../assets/github_icon.svg";
-// import gmailIcon from "../../assets/gmail_icon.svg";
-// import Avatar from "../../assets/avatar.png";
 import Jvin from "../../assets/jvin.png";
 import Banwa from "../../assets/banwa.png";
 import SquidPay from "../../assets/squidpay.png";
-// import mouse from "../../assets/mouse_icon.svg";
-
 import mouseShape from "../../assets/mouse.svg";
 import mouseScroller from "../../assets/mouse_scroller.svg";
 
