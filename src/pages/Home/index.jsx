@@ -27,7 +27,7 @@ const projects = [
     chip: "Client Project",
     title: "Product Designer Portfolio",
     desc: "Part-time freelance front-end development for a live client portfolio site",
-    href: "https://jvin.site/",
+    href: "https://p2025-jvin.vercel.app/",
     target: "_blank",
   },
   {
