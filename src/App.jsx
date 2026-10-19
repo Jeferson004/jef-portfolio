@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis } from "lenis/react";
 import gsap from "gsap";
+import { Analytics } from "@vercel/analytics/react";
 
 // Styles
 import "./App.css";
@@ -80,6 +81,8 @@ function App() {
           <Footer />
         </ReactLenis>
       </Noise>
+
+      <Analytics />
     </>
   );
 }
