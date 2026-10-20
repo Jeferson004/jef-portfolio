@@ -397,7 +397,6 @@
             height: 100%;
             object-fit: cover;
             border-radius: 2rem;
-            // margin-bottom: 32px;
           }
         }
 
@@ -413,13 +412,6 @@
             font-size: clamp(1rem, 0.907rem + 0.38vw, 1.25rem);
             font-weight: 400;
             line-height: clamp(1.5rem, 1.361rem + 0.57vw, 1.875rem);
-            margin-bottom: 0.75rem;
-          }
-
-          h6 {
-            font-size: clamp(1.5rem, 0.943rem + 2.29vw, 3rem);
-            font-weight: 900;
-            line-height: clamp(2rem, 1.35rem + 2.67vw, 3.75rem);
             margin-bottom: 0.75rem;
           }
 
